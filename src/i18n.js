@@ -106,7 +106,11 @@ export const translations = {
       title: '摇光流梦',
       subtitle: '让游戏串流更优雅',
       links: '相关链接',
-      copyright: '© 2024 摇光流梦. 基于 LizardByte/Sunshine 修改.'
+      copyright: '© 2024 摇光流梦. 基于 LizardByte/Sunshine 修改.',
+      icp: '蜀ICP备2025162900号-3',
+      icpLink: 'https://beian.miit.gov.cn/',
+      policePlaceholder: '公安备案号（待补充）',
+      policeBadgeAlt: '公安备案警徽'
     }
   },
   en: {
@@ -212,7 +216,11 @@ export const translations = {
       title: 'SDream',
       subtitle: 'Make Game Streaming Greater',
       links: 'Links',
-      copyright: '© 2024 SDream. Modified from LizardByte/Sunshine.'
+      copyright: '© 2024 SDream. Modified from LizardByte/Sunshine.',
+      icp: 'Shu ICP 2025162900-3',
+      icpLink: 'https://beian.miit.gov.cn/',
+      policePlaceholder: 'Public Security Filing No. (TBD)',
+      policeBadgeAlt: 'Public security filing badge'
     }
   }
 }
