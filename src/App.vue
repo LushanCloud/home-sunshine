@@ -590,6 +590,15 @@ const clients = [
         </div>
         <div class="footer-bottom">
           <p>{{ t.footer.copyright }}</p>
+          <div class="beian-row">
+            <span class="beian-item police-beian">
+              <img src="/police-badge.webp" :alt="t.footer.policeBadgeAlt" class="beian-badge" />
+              <span>{{ t.footer.policePlaceholder }}</span>
+            </span>
+            <a :href="t.footer.icpLink" class="beian-item" target="_blank" rel="noopener">
+              {{ t.footer.icp }}
+            </a>
+          </div>
         </div>
       </div>
     </footer>
@@ -2255,6 +2264,33 @@ const clients = [
       font-size: @font-size-sm;
     }
   }
+}
+
+.beian-row {
+  margin-top: @spacing-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: @spacing-md;
+  flex-wrap: wrap;
+}
+
+.beian-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: @font-size-sm;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
+.beian-badge {
+  width: 18px;
+  height: 18px;
 }
 
 // ============================================
