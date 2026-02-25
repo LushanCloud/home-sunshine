@@ -44,7 +44,7 @@ const themeName = computed(() => {
 // 更新页面标题
 const updatePageTitle = () => {
   document.title = currentLang.value === 'zh' 
-    ? '摇光流梦 - 让游戏串流更优雅' 
+    ? '瑶光流梦 - 让游戏串流更优雅' 
     : 'SDream - Make Game Streaming Greater'
 }
 

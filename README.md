@@ -1,10 +1,10 @@
-# 摇光流梦官网
+# 瑶光流梦官网
 
-基于 Vue 3 + Vite 构建的 摇光流梦 官方网站。
+基于 Vue 3 + Vite 构建的 瑶光流梦 官方网站。
 
 ## 项目介绍
 
-这是 摇光流梦 的官方网站项目，从 [sunshine-control-panel](https://github.com/qiin2333/sunshine-control-panel) 的 `src/renderer/home` 目录迁移而来，使用最新的 Vue 3 + Vite 技术栈重新构建。
+这是 瑶光流梦 的官方网站项目，从 [sunshine-control-panel](https://github.com/qiin2333/sunshine-control-panel) 的 `src/renderer/home` 目录迁移而来，使用最新的 Vue 3 + Vite 技术栈重新构建。
 
 ## 技术栈
 
