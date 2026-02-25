@@ -109,7 +109,7 @@ export const translations = {
       copyright: '© 2024 摇光流梦. 基于 LizardByte/Sunshine 修改.',
       icp: '蜀ICP备2025162900号-3',
       icpLink: 'https://beian.miit.gov.cn/',
-      policePlaceholder: '公安备案号（待补充）',
+      policePlaceholder: '川公网安备51130202000571号',
       policeBadgeAlt: '公安备案警徽'
     }
   },
@@ -219,7 +219,7 @@ export const translations = {
       copyright: '© 2024 SDream. Modified from LizardByte/Sunshine.',
       icp: 'Shu ICP 2025162900-3',
       icpLink: 'https://beian.miit.gov.cn/',
-      policePlaceholder: 'Public Security Filing No. (TBD)',
+      policePlaceholder: 'Sichuan Public Security No. 51130202000571',
       policeBadgeAlt: 'Public security filing badge'
     }
   }
