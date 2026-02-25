@@ -4,7 +4,7 @@
  */
 export const translations = {
   zh: {
-    title: '摇光流梦',
+    title: '瑶光流梦',
     tagline: '让游戏串流更优雅',
     subtitle: 'Sunshine, a self-hosted game-stream host for Moonlight, now features an HDR-friendly fork that integrates virtual displays and control panels.',
     nav: {
@@ -55,7 +55,7 @@ export const translations = {
       ]
     },
     download: {
-      title: '📥 下载 摇光流梦',
+      title: '📥 下载 瑶光流梦',
       latestVersion: '最新版本',
       checkUpdate: '检查更新',
       checking: '正在检查最新版本...',
@@ -103,10 +103,10 @@ export const translations = {
       qqGroupDesc: '加入社区获取帮助'
     },
     footer: {
-      title: '摇光流梦',
+      title: '瑶光流梦',
       subtitle: '让游戏串流更优雅',
       links: '相关链接',
-      copyright: '© 2024 摇光流梦. 基于 LizardByte/Sunshine 修改.',
+      copyright: '© 2024 瑶光流梦. 基于 LizardByte/Sunshine 修改.',
       icp: '蜀ICP备2025162900号-3',
       icpLink: 'https://beian.miit.gov.cn/',
       policePlaceholder: '川公网安备51130202000571号',
