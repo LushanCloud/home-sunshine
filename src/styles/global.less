@@ -30,34 +30,16 @@
   --background-tertiary: #f1f5f9;
   --background-dark: #1e293b;
   --background-darker: #0f172a;
-  --background-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
 
   // 边框颜色
   --border-color: #e2e8f0;
   --border-light: #f1f5f9;
   --border-dark: #334155;
 
-  // 渐变色
-  --gradient-primary: linear-gradient(135deg, #39c5bb 0%, #00d4ff 100%);
-  --gradient-secondary: linear-gradient(135deg, #39c5bb 0%, #2ba39a 100%);
-  --gradient-accent: linear-gradient(135deg, #39c5bb 0%, #00d4ff 50%, #7c3aed 100%);
-  --gradient-glow: radial-gradient(circle, rgba(57, 197, 187, 0.15) 0%, transparent 70%);
-  --gradient-hero: linear-gradient(135deg, rgba(57, 197, 187, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
-
-  // 发光效果
-  --shadow-glow: 0 0 30px rgba(57, 197, 187, 0.3);
-  --shadow-glow-strong: 0 0 60px rgba(57, 197, 187, 0.4);
-  --shadow-glow-subtle: 0 0 20px rgba(57, 197, 187, 0.2);
-
-  // 科技感元素
-  --tech-line-color: rgba(57, 197, 187, 0.3);
-  --tech-dot-color: rgba(57, 197, 187, 0.5);
-  --tech-grid-color: rgba(57, 197, 187, 0.1);
-
   // 卡片样式
-  --card-background: rgba(255, 255, 255, 0.9);
-  --card-border: rgba(57, 197, 187, 0.2);
-  --card-shadow: 0 8px 32px rgba(57, 197, 187, 0.1);
+  --card-background: #ffffff;
+  --card-border: #e2e8f0;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 // 巧克力主题（深色/温暖高端）
@@ -84,34 +66,16 @@
   --background-tertiary: #2d241c;
   --background-dark: #0f0b08;
   --background-darker: #080604;
-  --background-hero: linear-gradient(135deg, #0f0b08 0%, #1a1410 50%, #0f0b08 100%);
 
   // 边框颜色
   --border-color: #3d3128;
   --border-light: #4a3d32;
   --border-dark: #2d241c;
 
-  // 渐变色
-  --gradient-primary: linear-gradient(135deg, #d4a574 0%, #f4a460 100%);
-  --gradient-secondary: linear-gradient(135deg, #d4a574 0%, #c49464 100%);
-  --gradient-accent: linear-gradient(135deg, #8b5e3c 0%, #d4a574 50%, #f4a460 100%);
-  --gradient-glow: radial-gradient(circle, rgba(212, 165, 116, 0.15) 0%, transparent 70%);
-  --gradient-hero: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(244, 164, 96, 0.05) 100%);
-
-  // 发光效果
-  --shadow-glow: 0 0 30px rgba(212, 165, 116, 0.3);
-  --shadow-glow-strong: 0 0 60px rgba(212, 165, 116, 0.4);
-  --shadow-glow-subtle: 0 0 20px rgba(212, 165, 116, 0.2);
-
-  // 科技感元素
-  --tech-line-color: rgba(212, 165, 116, 0.3);
-  --tech-dot-color: rgba(212, 165, 116, 0.5);
-  --tech-grid-color: rgba(212, 165, 116, 0.1);
-
   // 卡片样式
-  --card-background: rgba(35, 28, 22, 0.9);
-  --card-border: rgba(212, 165, 116, 0.2);
-  --card-shadow: 0 8px 32px rgba(212, 165, 116, 0.1);
+  --card-background: #231c16;
+  --card-border: #3d3128;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 // ============================================
@@ -137,10 +101,7 @@ body {
   background-color: var(--background-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* 优化 transition，避免影响滚动性能 */
   transition: background-color 0.3s ease, color 0.3s ease;
-  /* 启用硬件加速 */
-  transform: translateZ(0);
 }
 
 // ============================================
@@ -334,7 +295,7 @@ img {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -344,7 +305,7 @@ img {
 
 @keyframes slideUp {
   from {
-    transform: translateY(30px);
+    transform: translateY(20px);
     opacity: 0;
   }
   to {
@@ -374,47 +335,5 @@ img {
 
   .show-desktop {
     display: block !important;
-  }
-}
-
-// ============================================
-// 科技感背景动画
-// ============================================
-
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes rotate-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
   }
 }

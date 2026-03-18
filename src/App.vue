@@ -5,7 +5,7 @@ import { translations } from './i18n.js'
 // 语言状态管理
 const currentLang = ref(localStorage.getItem('language') || 'zh')
 
-// 主题状态管理 - gura(蓝色科技) 或 chocolate(巧克力深色)
+// 主题状态管理 - gura(蓝色) 或 chocolate(巧克力深色)
 const currentTheme = ref(localStorage.getItem('theme') || 'gura')
 
 // 切换语言
@@ -30,9 +30,6 @@ watch(currentTheme, (newTheme) => {
   document.documentElement.setAttribute('data-theme', newTheme)
 })
 
-// 主题图标
-const themeIcon = computed(() => currentTheme.value === 'gura' ? '🌊' : '🍫')
-
 // 主题名称
 const themeName = computed(() => {
   const isGura = currentTheme.value === 'gura'
@@ -43,8 +40,8 @@ const themeName = computed(() => {
 
 // 更新页面标题
 const updatePageTitle = () => {
-  document.title = currentLang.value === 'zh' 
-    ? '瑶光流梦 - 让游戏串流更优雅' 
+  document.title = currentLang.value === 'zh'
+    ? '瑶光流梦 - 让游戏串流更优雅'
     : 'SDream - Make Game Streaming Greater'
 }
 
@@ -64,10 +61,10 @@ const versionInfo = ref({
   error: null,
 })
 
-// 国内镜像前缀（若失效可换：ghfast.top / cf.ghproxy.cc / gh.ddlc.top 等，见 https://ghproxy.link）
+// 国内镜像前缀
 const MIRROR_PREFIX = 'https://mirror.ghproxy.com/'
 
-// 下载链接（仓库为 qiin2333/Sunshine-Foundation）
+// 下载链接
 const downloadLinks = ref({
   windows: 'https://github.com/qiin2333/Sunshine-Foundation/releases/latest',
   github: 'https://github.com/qiin2333/Sunshine-Foundation/releases/',
@@ -76,7 +73,7 @@ const downloadLinks = ref({
 })
 
 // 提取资源下载链接
-const extractDownloadUrl = (assets, filename) => 
+const extractDownloadUrl = (assets, filename) =>
   assets.find(asset => asset.name.includes(filename))?.browser_download_url
 
 // 检查最新版本
@@ -114,7 +111,6 @@ const checkLatestVersion = async () => {
       }
     }
 
-    // 更新下载链接
     const latestDownloadUrl = versionInfo.value.latest.downloadUrl
     if (latestDownloadUrl) {
       downloadLinks.value.latest = latestDownloadUrl
@@ -124,7 +120,6 @@ const checkLatestVersion = async () => {
   } catch (error) {
     console.error('版本检查失败:', error)
     versionInfo.value.error = error.message
-    // 使用默认下载地址
     const fallbackUrl = 'https://vip.123pan.cn/1813496318/26878949'
     downloadLinks.value.windows = fallbackUrl
     downloadLinks.value.mirror = fallbackUrl
@@ -133,58 +128,17 @@ const checkLatestVersion = async () => {
   }
 }
 
-// 设置特性滚动动画
-const setupFeatureAnimations = () => {
-  const featureSections = document.querySelectorAll('.feature-section')
-  
-  // 第一个特性立即触发动画
-  if (featureSections[0]) {
-    requestAnimationFrame(() => {
-      featureSections[0].classList.add('is-visible')
-    })
-  }
-  
-  // 使用 requestAnimationFrame 优化回调性能
-  let rafId = null
-  const observer = new IntersectionObserver(
-    (entries) => {
-      if (rafId) cancelAnimationFrame(rafId)
-      
-      rafId = requestAnimationFrame(() => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      })
-    },
-    { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
-  )
-
-  // 从第二个特性开始观察
-  for (let i = 1; i < featureSections.length; i++) {
-    observer.observe(featureSections[i])
-  }
-}
-
 onMounted(() => {
-  // 设置初始主题和语言
   document.documentElement.setAttribute('data-theme', currentTheme.value)
   document.documentElement.lang = currentLang.value === 'zh' ? 'zh-CN' : 'en'
   updatePageTitle()
 
-  // 预加载 Star History 图表
   const img = new Image()
   img.onload = () => { starHistoryLoaded.value = true }
   img.onerror = () => { starHistoryError.value = true }
   img.src = 'https://api.star-history.com/svg?repos=qiin2333/Sunshine-Foundation&type=Date&width=800&height=400'
 
-  // 检查最新版本
   checkLatestVersion()
-
-  // 设置特性区域的滚动动画
-  setTimeout(setupFeatureAnimations, 100)
 })
 
 // 客户端推荐
@@ -210,47 +164,45 @@ const clients = [
     link: 'https://apps.apple.com/cn/app/voidlink/id6747717070',
   },
 ]
+
+// 赞助者数据
+const sponsors = {
+  gold: [
+    // { name: 'Example Corp', logo: '/sponsors/example.png', url: 'https://example.com' }
+  ],
+  silver: [
+    // { name: 'Alice', url: 'https://github.com/alice', avatar: 'https://avatars.githubusercontent.com/u/xxx' }
+  ],
+  bronze: [
+    // { name: 'Bob', url: 'https://github.com/bob' }
+  ],
+}
 </script>
 
 <template>
   <div class="website" :data-theme="currentTheme">
-    <!-- 科技感背景装饰 -->
-    <div class="tech-background">
-      <div class="tech-grid"></div>
-      <div class="tech-glow tech-glow-1"></div>
-      <div class="tech-glow tech-glow-2"></div>
-      <div class="tech-glow tech-glow-3"></div>
-    </div>
-
     <!-- 头部导航 -->
     <header class="header">
       <div class="container">
         <nav class="nav">
-          <!-- Logo 区域 -->
           <a href="#" class="logo">
-            <div class="logo-icon">
-              <span class="logo-emoji">☀️</span>
-              <span class="logo-glow"></span>
-            </div>
-            <div class="logo-text">
-              <span class="logo-name">{{ t.title }}</span>
-              <span class="logo-badge">Beta</span>
-            </div>
+            <span class="logo-name">{{ t.title }}</span>
+            <span class="logo-badge">Beta</span>
           </a>
-          
-          <!-- 导航链接 -->
+
           <div class="nav-center">
             <a href="#features" class="nav-link">{{ t.nav.features }}</a>
             <a href="#download" class="nav-link">{{ t.nav.download }}</a>
             <a href="#clients" class="nav-link">{{ t.nav.clients }}</a>
             <a href="#stats" class="nav-link">{{ t.nav.stats }}</a>
             <a href="#docs" class="nav-link">{{ t.nav.docs }}</a>
+            <a href="#sponsors" class="nav-link">{{ t.nav.sponsors }}</a>
           </div>
-          
-          <!-- 控制按钮 -->
+
           <div class="nav-controls">
             <button @click="toggleTheme" class="theme-toggle" :title="themeName">
-              <span class="theme-icon">{{ themeIcon }}</span>
+              <svg v-if="currentTheme === 'gura'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
             <button @click="toggleLanguage" class="lang-toggle">
               {{ currentLang === 'zh' ? 'EN' : '中文' }}
@@ -260,108 +212,58 @@ const clients = [
       </div>
     </header>
 
-    <!-- 主横幅 - 梦幻/丝滑/极速 视觉 -->
+    <!-- 主横幅 -->
     <section class="hero">
-      <!-- 多层背景效果 -->
-      <div class="hero-bg">
-        <!-- 梦幻渐变光晕 -->
-        <div class="hero-aurora">
-          <div class="aurora-layer aurora-1"></div>
-          <div class="aurora-layer aurora-2"></div>
-          <div class="aurora-layer aurora-3"></div>
-        </div>
-        <!-- 极速光线 -->
-        <div class="hero-speed-lines">
-          <div class="speed-line" v-for="n in 8" :key="n" :style="{ '--i': n }"></div>
-        </div>
-        <!-- 丝滑波浪 -->
-        <div class="hero-waves">
-          <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path class="wave wave-1" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            <path class="wave wave-2" d="M0,256L48,240C96,224,192,192,288,181.3C384,171,480,181,576,197.3C672,213,768,235,864,224C960,213,1056,171,1152,165.3C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
-        <!-- 星光粒子 -->
-        <div class="hero-stars">
-          <div class="star" v-for="n in 20" :key="n" :style="{ '--x': Math.random() * 100, '--y': Math.random() * 100, '--d': Math.random() * 3 + 1, '--s': Math.random() * 0.5 + 0.5 }"></div>
-        </div>
-        <!-- 流光效果 -->
-        <div class="hero-glow-orbs">
-          <div class="glow-orb orb-1"></div>
-          <div class="glow-orb orb-2"></div>
-          <div class="glow-orb orb-3"></div>
-        </div>
-      </div>
-      
       <div class="container">
         <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-glow"></span>
-            <span class="badge-dot"></span>
-            <span>Game Streaming Platform</span>
-          </div>
-          <h1 class="hero-title">
-            <span class="title-main">{{ t.tagline }}</span>
-            <span class="title-shimmer"></span>
-          </h1>
+          <p class="hero-badge">Game Streaming Platform</p>
+          <h1 class="hero-title">{{ t.tagline }}</h1>
           <p class="hero-subtitle">{{ t.subtitle }}</p>
           <div class="hero-actions">
-            <a :href="downloadLinks.windows" class="btn btn-primary btn-glow">
-              <span class="btn-text">{{ t.hero.download }}</span>
-              <span class="btn-shine"></span>
+            <a :href="downloadLinks.windows" class="btn btn-primary">
+              {{ t.hero.download }}
             </a>
-            <a :href="downloadLinks.github" class="btn btn-ghost">
-              <span class="btn-text">{{ t.hero.github }}</span>
+            <a :href="downloadLinks.github" class="btn btn-outline">
+              {{ t.hero.github }}
             </a>
-            <a :href="downloadLinks.mirror" class="btn btn-ghost">
-              <span class="btn-text">{{ t.hero.mirror }}</span>
+            <a :href="downloadLinks.mirror" class="btn btn-outline">
+              {{ t.hero.mirror }}
             </a>
           </div>
           <div class="hero-stats">
-            <div class="stat-item">
-              <span class="stat-icon">⚡</span>
-              <span class="stat-text">Low Latency</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-icon">🎨</span>
-              <span class="stat-text">HDR Support</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-              <span class="stat-icon">🖥️</span>
-              <span class="stat-text">Virtual Display</span>
-            </div>
+            <span class="stat-item">Low Latency</span>
+            <span class="stat-divider"></span>
+            <span class="stat-item">HDR Support</span>
+            <span class="stat-divider"></span>
+            <span class="stat-item">Virtual Display</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- 核心特性 -->
-    <section id="features" class="features">
-      <div class="features-container">
-        <div 
-          v-for="(feature, index) in t.features.items" 
-          :key="feature.title" 
-          class="feature-section" 
-          :data-index="index"
-        >
-          <div class="feature-content">
-            <div class="feature-number">{{ String(index + 1).padStart(2, '0') }}</div>
-            <div class="feature-main">
-              <h2 class="feature-headline">{{ feature.title }}</h2>
-              <p class="feature-description">{{ feature.description }}</p>
-            </div>
-          </div>
-          <div class="feature-visual">
-            <div class="feature-glow-effect"></div>
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">{{ t.features.title }}</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="features-grid">
+          <div
+            v-for="(feature, index) in t.features.items"
+            :key="feature.title"
+            class="feature-card"
+          >
+            <span class="feature-number">{{ String(index + 1).padStart(2, '0') }}</span>
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-desc">{{ feature.description }}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- 下载区域 -->
-    <section id="download" class="download">
+    <section id="download" class="section section-alt">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">{{ t.download.title }}</h2>
@@ -371,19 +273,17 @@ const clients = [
         <!-- 版本信息 -->
         <div v-if="versionInfo.latest" class="version-info">
           <div class="version-badge">
-            <span class="version-pulse"></span>
+            <span class="version-dot"></span>
             <span class="version-label">{{ t.download.latestVersion }}</span>
             <span class="version-number">{{ versionInfo.latest.version }}</span>
           </div>
-          <div class="version-actions">
-            <button 
-              @click="checkLatestVersion" 
-              class="btn-refresh" 
-              :disabled="versionInfo.loading"
-            >
-              {{ t.download.checkUpdate }}
-            </button>
-          </div>
+          <button
+            @click="checkLatestVersion"
+            class="btn-text"
+            :disabled="versionInfo.loading"
+          >
+            {{ t.download.checkUpdate }}
+          </button>
         </div>
 
         <!-- 加载状态 -->
@@ -395,7 +295,7 @@ const clients = [
         <!-- 错误状态 -->
         <div v-if="versionInfo.error" class="error-state">
           <p>{{ t.download.error }}</p>
-          <button @click="checkLatestVersion" class="btn btn-secondary">
+          <button @click="checkLatestVersion" class="btn btn-outline">
             {{ t.download.retry }}
           </button>
         </div>
@@ -404,9 +304,9 @@ const clients = [
           <div class="download-info">
             <h3>{{ t.download.requirements }}</h3>
             <ul class="requirements-list">
-              <li 
-                v-for="(req, index) in t.download.requirementsList" 
-                :key="index" 
+              <li
+                v-for="(req, index) in t.download.requirementsList"
+                :key="index"
                 v-html="req"
               ></li>
             </ul>
@@ -417,26 +317,26 @@ const clients = [
                 <strong>{{ t.download.windowsLatest }}</strong>
                 <small>{{ versionInfo.latest?.version || t.download.recommended }}</small>
               </span>
-              <span class="download-arrow">→</span>
+              <span class="download-arrow">&rarr;</span>
             </a>
             <a :href="downloadLinks.github" class="download-btn">
               <span class="download-text">
                 <strong>{{ t.download.allVersions }}</strong>
                 <small>{{ t.download.githubReleases }}</small>
               </span>
-              <span class="download-arrow">→</span>
+              <span class="download-arrow">&rarr;</span>
             </a>
             <a :href="downloadLinks.mirror" class="download-btn">
               <span class="download-text">
                 <strong>{{ t.download.mirrorDownload }}</strong>
                 <small>{{ t.download.domesticSpeed }}</small>
               </span>
-              <span class="download-arrow">→</span>
+              <span class="download-arrow">&rarr;</span>
             </a>
           </div>
         </div>
 
-        <!-- 预发布版本提示 -->
+        <!-- 预发布版本 -->
         <div v-if="versionInfo.preRelease" class="prerelease-alert">
           <div class="alert-content">
             <h4>{{ t.download.prerelease }}</h4>
@@ -445,9 +345,9 @@ const clients = [
               <strong>{{ versionInfo.preRelease.version }}</strong>
             </p>
           </div>
-          <a 
-            :href="versionInfo.preRelease.releaseUrl" 
-            class="btn btn-warning" 
+          <a
+            :href="versionInfo.preRelease.releaseUrl"
+            class="btn btn-outline"
             target="_blank"
           >
             {{ t.download.viewPrerelease }}
@@ -457,7 +357,7 @@ const clients = [
     </section>
 
     <!-- 推荐客户端 -->
-    <section id="clients" class="clients">
+    <section id="clients" class="section">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">{{ t.clients.title }}</h2>
@@ -479,7 +379,7 @@ const clients = [
     </section>
 
     <!-- Star History -->
-    <section id="stats" class="stats">
+    <section id="stats" class="section section-alt">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">{{ t.stats.title }}</h2>
@@ -493,10 +393,10 @@ const clients = [
           </div>
           <div v-else-if="starHistoryError" class="error-state">
             <p>{{ t.stats.error }}</p>
-            <a 
-              href="https://star-history.com/#qiin2333/Sunshine-Foundation&Date" 
-              target="_blank" 
-              class="btn btn-secondary"
+            <a
+              href="https://star-history.com/#qiin2333/Sunshine-Foundation&Date"
+              target="_blank"
+              class="btn btn-outline"
             >
               {{ t.stats.viewManually }}
             </a>
@@ -510,16 +410,16 @@ const clients = [
           />
         </div>
         <div class="stats-actions">
-          <a 
-            href="https://github.com/qiin2333/Sunshine-Foundation" 
-            class="btn btn-primary" 
+          <a
+            href="https://github.com/qiin2333/Sunshine-Foundation"
+            class="btn btn-primary"
             target="_blank"
           >
             {{ t.stats.giveStar }}
           </a>
-          <a 
-            href="https://star-history.com/#qiin2333/Sunshine-Foundation&Date" 
-            class="btn btn-secondary" 
+          <a
+            href="https://star-history.com/#qiin2333/Sunshine-Foundation&Date"
+            class="btn btn-outline"
             target="_blank"
           >
             {{ t.stats.viewStats }}
@@ -529,7 +429,7 @@ const clients = [
     </section>
 
     <!-- 文档链接 -->
-    <section id="docs" class="docs">
+    <section id="docs" class="section">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">{{ t.docs.title }}</h2>
@@ -544,9 +444,9 @@ const clients = [
             <h3>{{ t.docs.userGuide }}</h3>
             <p>{{ t.docs.userGuideDesc }}</p>
           </a>
-          <a 
-            href="https://docs.lizardbyte.dev/projects/sunshine/latest/" 
-            class="doc-card" 
+          <a
+            href="https://docs.lizardbyte.dev/projects/sunshine/latest/"
+            class="doc-card"
             target="_blank"
           >
             <h3>{{ t.docs.officialDocs }}</h3>
@@ -564,14 +464,115 @@ const clients = [
       </div>
     </section>
 
+    <!-- 赞助者展示 -->
+    <section id="sponsors" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">{{ t.sponsors.title }}</h2>
+          <p class="section-subtitle">{{ t.sponsors.subtitle }}</p>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- 金牌赞助者 -->
+        <div class="sponsors-tier">
+          <h3 class="tier-label tier-gold">{{ t.sponsors.gold }}</h3>
+          <div v-if="sponsors.gold.length" class="sponsors-gold-grid">
+            <a
+              v-for="s in sponsors.gold"
+              :key="s.name"
+              :href="s.url"
+              class="sponsor-gold-card"
+              target="_blank"
+              rel="noopener"
+            >
+              <img v-if="s.logo" :src="s.logo" :alt="s.name" class="sponsor-logo" />
+              <span v-else class="sponsor-name-lg">{{ s.name }}</span>
+            </a>
+          </div>
+          <div v-else class="sponsors-empty gold-empty">
+            <div class="empty-slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <p>{{ t.sponsors.emptyGold }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 银牌赞助者 -->
+        <div class="sponsors-tier">
+          <h3 class="tier-label tier-silver">{{ t.sponsors.silver }}</h3>
+          <div v-if="sponsors.silver.length" class="sponsors-avatar-grid">
+            <a
+              v-for="s in sponsors.silver"
+              :key="s.name"
+              :href="s.url"
+              class="sponsor-avatar-item"
+              target="_blank"
+              rel="noopener"
+              :title="s.name"
+            >
+              <img v-if="s.avatar" :src="s.avatar" :alt="s.name" class="sponsor-avatar" />
+              <span v-else class="sponsor-avatar-placeholder">{{ s.name.charAt(0) }}</span>
+              <span class="sponsor-avatar-name">{{ s.name }}</span>
+            </a>
+          </div>
+          <p v-else class="sponsors-empty-text">{{ t.sponsors.emptySilver }}</p>
+        </div>
+
+        <!-- 铜牌赞助者 -->
+        <div class="sponsors-tier">
+          <h3 class="tier-label tier-bronze">{{ t.sponsors.bronze }}</h3>
+          <div v-if="sponsors.bronze.length" class="sponsors-name-list">
+            <a
+              v-for="s in sponsors.bronze"
+              :key="s.name"
+              :href="s.url"
+              class="sponsor-name-tag"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ s.name }}
+            </a>
+          </div>
+          <p v-else class="sponsors-empty-text">{{ t.sponsors.emptyBronze }}</p>
+        </div>
+
+        <div class="sponsors-cta">
+          <p class="sponsors-cta-label">{{ t.sponsors.becomeSponsor }}</p>
+          <div class="sponsors-cta-buttons">
+            <a
+              href="https://www.ifdian.net/a/Yundi339"
+              class="btn btn-primary"
+              target="_blank"
+            >
+              {{ t.sponsors.ifdian }}
+            </a>
+            <a
+              href="/wechat-sponsor.png"
+              class="btn btn-outline sponsor-btn-wechat"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.11.24-.245 0-.06-.024-.12-.04-.178l-.327-1.233a.49.49 0 0 1 .177-.554C23.02 18.482 24 16.81 24 14.936c0-3.372-3.265-6.078-7.062-6.078zm-2.036 2.891c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.072 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982z"/></svg>
+              {{ t.sponsors.wechat }}
+            </a>
+            <a
+              href="/alipay-sponsor.png"
+              class="btn btn-outline sponsor-btn-alipay"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.422 15.358c-3.32-1.326-6.092-3.084-6.17-3.133.6-1.202 1.043-2.573 1.259-4.063h-3.49V6.312h4.222V5.187h-4.222V2.531h-2.073s-.041.3-.144.525c-.173.377-.472.637-.472.637h2.689v2.494H8.655v1.125h4.366c-.195 1.205-.568 2.32-1.078 3.318-1.553-.862-3.35-1.48-5.435-1.48-3.492 0-5.538 2.035-5.538 4.28 0 2.246 2.046 4.049 5.538 4.049 2.607 0 4.757-1.078 6.328-2.861.933.56 3.587 2.029 5.716 2.857C21.068 18.663 23 15.523 24 12c-1.028-.273-2.578.358-2.578.358zm-14.97 3.39c-2.532 0-3.813-1.155-3.813-2.636 0-1.482 1.281-2.867 3.813-2.867 1.69 0 3.202.527 4.53 1.299a10.48 10.48 0 0 1-4.53 4.204z"/></svg>
+              {{ t.sponsors.alipay }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 页脚 -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
           <div class="footer-section footer-brand">
-            <div class="footer-logo">
-              <h4>{{ t.footer.title }}</h4>
-            </div>
+            <h4 class="footer-logo-text">{{ t.footer.title }}</h4>
             <p>{{ t.footer.subtitle }}</p>
           </div>
           <div class="footer-section">
@@ -591,7 +592,7 @@ const clients = [
         <div class="footer-bottom">
           <p>{{ t.footer.copyright }}</p>
           <div class="beian-row">
-            <span class="beian-item police-beian">
+            <span class="beian-item">
               <img src="/police-badge.webp" :alt="t.footer.policeBadgeAlt" class="beian-badge" />
               <span>{{ t.footer.policePlaceholder }}</span>
             </span>
@@ -607,10 +608,9 @@ const clients = [
 
 <style lang="less" scoped>
 @import './styles/variables.less';
-@import './styles/mixins.less';
 
 // ============================================
-// 基础样式
+// 朴素简洁风格 - 参考 Open WebUI
 // ============================================
 
 .website {
@@ -619,1289 +619,441 @@ const clients = [
   color: var(--text-primary);
   background: var(--background-primary);
   min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-  transform: translateZ(0);
-  will-change: scroll-position;
-  contain: layout style paint;
 }
 
 .container {
-  .container();
-}
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 
-// ============================================
-// 科技感背景
-// ============================================
-
-.tech-background {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-  transform: translateZ(0);
-  will-change: transform;
-  contain: layout style paint;
-}
-
-.tech-grid {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(var(--tech-grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--tech-grid-color) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.5;
-}
-
-.tech-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.3;
-  animation: pulse-glow 8s ease-in-out infinite;
-  transform: translateZ(0);
-  will-change: transform, opacity;
-  contain: layout style paint;
-
-  &-1 {
-    width: 600px;
-    height: 600px;
-    background: var(--primary-color);
-    top: -200px;
-    right: -200px;
-  }
-
-  &-2 {
-    width: 400px;
-    height: 400px;
-    background: var(--accent-color);
-    bottom: 20%;
-    left: -100px;
-    animation-delay: 2s;
-  }
-
-  &-3 {
-    width: 500px;
-    height: 500px;
-    background: var(--accent-secondary);
-    top: 50%;
-    right: 10%;
-    animation-delay: 4s;
-    opacity: 0.2;
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.2;
-    transform: translateZ(0) scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: translateZ(0) scale(1.1);
+  @media (max-width: 640px) {
+    padding: 0 1rem;
   }
 }
 
 // ============================================
-// 头部导航
-// ============================================
-
-// ============================================
-// Header 导航栏
+// Header
 // ============================================
 
 .header {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   position: sticky;
   top: 0;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  transform: translateZ(0);
-  will-change: transform;
-  
-  [data-theme="gura"] & {
-    background: rgba(255, 255, 255, 0.8);
-    border-bottom-color: var(--border-color);
-  }
+  z-index: 100;
+  background: var(--background-primary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
 }
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: @spacing-sm 0;
-  gap: @spacing-lg;
+  padding: 0.75rem 0;
+  gap: 1.5rem;
 }
 
-// ========== Logo 区域 ==========
 .logo {
   display: flex;
   align-items: center;
-  gap: @spacing-sm;
+  gap: 0.5rem;
   text-decoration: none;
   flex-shrink: 0;
-  
-  &-icon {
-    position: relative;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    .logo-emoji {
-      font-size: @font-size-2xl;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    }
-    
-    .logo-glow {
-      position: absolute;
-      inset: -4px;
-      background: var(--gradient-primary);
-      border-radius: 50%;
-      opacity: 0.2;
-      filter: blur(8px);
-      animation: logo-pulse 3s ease-in-out infinite;
-    }
-  }
-  
-  &-text {
-    display: flex;
-    align-items: center;
-    gap: @spacing-xs;
-  }
-  
-  &-name {
-    font-size: @font-size-lg;
-    font-weight: @font-weight-bold;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-  }
-  
-  &-badge {
-    font-size: 10px;
-    font-weight: @font-weight-semibold;
-    background: var(--gradient-primary);
-    color: var(--text-inverse);
-    padding: 2px 6px;
-    border-radius: @border-radius-sm;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  &:hover {
-    .logo-glow {
-      opacity: 0.4;
-    }
-    
-    .logo-name {
-      filter: drop-shadow(0 0 8px var(--primary-color));
-    }
-  }
 }
 
-@keyframes logo-pulse {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.35;
-    transform: scale(1.1);
-  }
+.logo-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
-// ========== 导航链接 ==========
+.logo-badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  background: var(--primary-color);
+  color: var(--text-inverse);
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .nav-center {
   display: flex;
   align-items: center;
-  gap: @spacing-xs;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 4px;
-  border-radius: @border-radius-lg;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  
-  [data-theme="gura"] & {
-    background: var(--background-secondary);
-    border-color: var(--border-color);
-  }
+  gap: 0.25rem;
 }
 
 .nav-link {
   text-decoration: none;
   color: var(--text-secondary);
-  font-weight: @font-weight-medium;
-  font-size: @font-size-sm;
-  padding: @spacing-xs @spacing-md;
-  border-radius: @border-radius-md;
-  transition: all 0.25s ease;
-  position: relative;
-  white-space: nowrap;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: color 0.2s, background-color 0.2s;
 
   &:hover {
     color: var(--primary-color);
-    background: rgba(57, 197, 187, 0.1);
-  }
-  
-  &:active {
-    transform: scale(0.98);
+    background: var(--background-secondary);
   }
 }
 
-// ========== 控制按钮 ==========
 .nav-controls {
   display: flex;
-  gap: @spacing-sm;
+  gap: 0.5rem;
   align-items: center;
   flex-shrink: 0;
 }
 
 .theme-toggle {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: @border-radius-md;
-  width: 40px;
-  height: 40px;
-  .flex-center();
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.3s ease;
-  
-  [data-theme="gura"] & {
-    background: var(--background-secondary);
-    border-color: var(--border-color);
-  }
-
-  .theme-icon {
-    font-size: @font-size-lg;
-    transition: transform 0.3s ease;
-  }
+  transition: all 0.2s;
 
   &:hover {
+    color: var(--primary-color);
     border-color: var(--primary-color);
-    background: rgba(57, 197, 187, 0.1);
-    
-    .theme-icon {
-      transform: rotate(20deg) scale(1.1);
-    }
-  }
-  
-  &:active {
-    transform: scale(0.95);
   }
 }
 
 .lang-toggle {
-  background: var(--gradient-primary);
+  background: var(--primary-color);
   color: var(--text-inverse);
   border: none;
-  padding: 10px 18px;
-  border-radius: @border-radius-md;
-  font-weight: @font-weight-semibold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: @font-size-sm;
-  box-shadow: 0 2px 8px rgba(57, 197, 187, 0.25);
+  transition: opacity 0.2s;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(57, 197, 187, 0.35);
-  }
-  
-  &:active {
-    transform: translateY(0);
+    opacity: 0.9;
   }
 }
 
 // ============================================
-// 主横幅
-// ============================================
-
-// ============================================
-// Hero 区域 - 梦幻/丝滑/极速 视觉效果
+// Hero
 // ============================================
 
 .hero {
-  position: relative;
-  padding: @spacing-6xl 0 @spacing-3xl;
-  background: var(--background-hero);
-  overflow: hidden;
-  min-height: 90vh;
-  .flex-center();
+  padding: 6rem 0 4rem;
+  text-align: center;
+  background: var(--background-primary);
+}
 
-  // 背景容器
-  &-bg {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-  }
+.hero-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
 
-  // ========== 梦幻极光效果 ==========
-  &-aurora {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    
-    .aurora-layer {
-      position: absolute;
-      width: 150%;
-      height: 150%;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.4;
-      animation: aurora-float 15s ease-in-out infinite;
-      will-change: transform;
-      
-      &.aurora-1 {
-        background: linear-gradient(135deg, var(--primary-color) 0%, transparent 60%);
-        top: -50%;
-        left: -25%;
-        animation-delay: 0s;
-      }
-      
-      &.aurora-2 {
-        background: linear-gradient(225deg, var(--accent-color) 0%, transparent 60%);
-        top: -30%;
-        right: -25%;
-        animation-delay: -5s;
-        animation-duration: 18s;
-      }
-      
-      &.aurora-3 {
-        background: linear-gradient(315deg, var(--accent-secondary) 0%, transparent 60%);
-        bottom: -40%;
-        left: 20%;
-        animation-delay: -10s;
-        animation-duration: 20s;
-        opacity: 0.3;
-      }
-    }
-  }
+.hero-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+  opacity: 0.85;
+}
 
-  // ========== 极速光线效果 ==========
-  &-speed-lines {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    
-    .speed-line {
-      position: absolute;
-      width: 2px;
-      height: 80px;
-      background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
-      opacity: 0;
-      animation: speed-dash 3s ease-in-out infinite;
-      animation-delay: calc(var(--i) * 0.4s);
-      left: calc(var(--i) * 12.5%);
-      top: -100px;
-      transform: rotate(15deg);
-      will-change: transform, opacity;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -1px;
-        width: 4px;
-        height: 100%;
-        background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
-        filter: blur(4px);
-      }
-    }
-  }
+.hero-title {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
+  color: var(--text-primary);
+}
 
-  // ========== 丝滑波浪效果 ==========
-  &-waves {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    overflow: hidden;
-    
-    .wave-svg {
-      position: absolute;
-      bottom: 0;
-      width: 200%;
-      height: 100%;
-      animation: wave-drift 25s linear infinite;
-      will-change: transform;
-    }
-    
-    .wave {
-      fill: var(--primary-color);
-      
-      &.wave-1 {
-        opacity: 0.08;
-        animation: wave-morph 8s ease-in-out infinite;
-      }
-      
-      &.wave-2 {
-        opacity: 0.05;
-        animation: wave-morph 10s ease-in-out infinite reverse;
-      }
-    }
-  }
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  // ========== 星光粒子 ==========
-  &-stars {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    
-    .star {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--primary-color);
-      border-radius: 50%;
-      left: calc(var(--x) * 1%);
-      top: calc(var(--y) * 1%);
-      opacity: 0;
-      transform: scale(calc(var(--s)));
-      animation: star-twinkle calc(var(--d) * 1s) ease-in-out infinite;
-      box-shadow: 0 0 6px var(--primary-color), 0 0 12px var(--primary-color);
-      will-change: opacity, transform;
-    }
-  }
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
 
-  // ========== 流光球效果 ==========
-  &-glow-orbs {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    
-    .glow-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: 0.5;
-      animation: orb-float 12s ease-in-out infinite;
-      will-change: transform;
-      
-      &.orb-1 {
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-        top: 10%;
-        right: 15%;
-        animation-delay: 0s;
-      }
-      
-      &.orb-2 {
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
-        bottom: 20%;
-        left: 10%;
-        animation-delay: -4s;
-      }
-      
-      &.orb-3 {
-        width: 250px;
-        height: 250px;
-        background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
-        top: 40%;
-        left: 50%;
-        animation-delay: -8s;
-        opacity: 0.3;
-      }
-    }
-  }
+.hero-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
 
-  // ========== 内容区域 ==========
-  &-content {
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    max-width: 950px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  // ========== 徽章 ==========
-  &-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: @spacing-sm;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: @spacing-xs @spacing-lg;
-    border-radius: @border-radius-full;
-    margin-bottom: @spacing-lg;
-    color: var(--primary-color);
-    font-size: @font-size-sm;
-    font-weight: @font-weight-medium;
-    position: relative;
-    overflow: hidden;
-
-    .badge-glow {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: shimmer 3s ease-in-out infinite;
-    }
-
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--primary-color);
-      border-radius: 50%;
-      animation: pulse-glow 2s ease-in-out infinite;
-      box-shadow: 0 0 10px var(--primary-color);
-      position: relative;
-      z-index: 1;
-    }
-    
-    span:last-child {
-      position: relative;
-      z-index: 1;
-    }
-  }
-
-  // ========== 标题 ==========
-  &-title {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    margin-bottom: @spacing-lg;
-    font-weight: @font-weight-extrabold;
-    line-height: 1.1;
-    position: relative;
-    display: block;
-    width: 100%;
-
-    .title-main {
-      background: linear-gradient(135deg, 
-        var(--primary-color) 0%, 
-        var(--accent-color) 25%,
-        var(--primary-color) 50%, 
-        var(--accent-secondary) 75%,
-        var(--primary-color) 100%
-      );
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient-flow 4s linear infinite;
-      filter: drop-shadow(0 0 30px rgba(var(--primary-color), 0.3));
-    }
-    
-    .title-shimmer {
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      animation: title-shine 4s ease-in-out infinite;
-    }
-  }
-
-  // ========== 副标题 ==========
-  &-subtitle {
-    font-size: @font-size-lg;
-    margin-bottom: @spacing-2xl;
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.8;
-    opacity: 0.9;
-  }
-
-  // ========== 操作按钮 ==========
-  &-actions {
-    .flex-center();
-    gap: @spacing-md;
-    flex-wrap: wrap;
-    margin-bottom: @spacing-2xl;
-  }
-
-  // ========== 统计信息 ==========
-  &-stats {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: @spacing-xl;
-    flex-wrap: wrap;
-    padding: @spacing-md @spacing-xl;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border-radius: @border-radius-lg;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: @spacing-sm;
-      color: var(--text-secondary);
-      font-size: @font-size-sm;
-      font-weight: @font-weight-medium;
-      
-      .stat-icon {
-        font-size: @font-size-base;
-      }
-    }
-
-    .stat-divider {
-      width: 1px;
-      height: 24px;
-      background: linear-gradient(to bottom, transparent, var(--border-color), transparent);
-    }
-  }
+.stat-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-color);
 }
 
 // ============================================
-// Hero 动画关键帧
-// ============================================
-
-@keyframes aurora-float {
-  0%, 100% {
-    transform: translateZ(0) translate(0, 0) rotate(0deg) scale(1);
-  }
-  25% {
-    transform: translateZ(0) translate(30px, -20px) rotate(5deg) scale(1.05);
-  }
-  50% {
-    transform: translateZ(0) translate(-20px, 30px) rotate(-5deg) scale(0.95);
-  }
-  75% {
-    transform: translateZ(0) translate(-30px, -10px) rotate(3deg) scale(1.02);
-  }
-}
-
-@keyframes speed-dash {
-  0% {
-    transform: translateY(-100px) rotate(15deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.8;
-  }
-  90% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(calc(100vh + 100px)) rotate(15deg);
-    opacity: 0;
-  }
-}
-
-@keyframes wave-drift {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes wave-morph {
-  0%, 100% {
-    d: path("M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L0,320Z");
-  }
-  50% {
-    d: path("M0,192L48,181.3C96,171,192,149,288,160C384,171,480,213,576,224C672,235,768,213,864,192C960,171,1056,149,1152,154.7C1248,160,1344,192,1392,208L1440,224L1440,320L0,320Z");
-  }
-}
-
-@keyframes star-twinkle {
-  0%, 100% {
-    opacity: 0;
-    transform: translateZ(0) scale(calc(var(--s) * 0.5));
-  }
-  50% {
-    opacity: 1;
-    transform: translateZ(0) scale(calc(var(--s)));
-  }
-}
-
-@keyframes orb-float {
-  0%, 100% {
-    transform: translateZ(0) translate(0, 0);
-  }
-  25% {
-    transform: translateZ(0) translate(40px, -30px);
-  }
-  50% {
-    transform: translateZ(0) translate(-30px, 40px);
-  }
-  75% {
-    transform: translateZ(0) translate(20px, 20px);
-  }
-}
-
-@keyframes gradient-flow {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-@keyframes title-shine {
-  0% {
-    left: -100%;
-  }
-  20%, 100% {
-    left: 150%;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-    box-shadow: 0 0 10px var(--primary-color);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.2);
-    box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
-  }
-}
-
-@keyframes btn-pulse {
-  0%, 100% {
-    box-shadow: 
-      0 4px 15px rgba(57, 197, 187, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-  }
-  50% {
-    box-shadow: 
-      0 4px 20px rgba(57, 197, 187, 0.5),
-      0 0 0 1px rgba(255, 255, 255, 0.15) inset,
-      0 0 30px rgba(57, 197, 187, 0.2);
-  }
-}
-
-@keyframes shine-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-// ============================================
-// 按钮样式
+// Buttons
 // ============================================
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: @spacing-sm;
-  padding: 14px 32px;
-  border-radius: @border-radius-lg;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
   text-decoration: none;
-  font-weight: @font-weight-semibold;
-  font-size: @font-size-base;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border: none;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  border: none;
+  transition: all 0.2s;
+}
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-    transition: left 0.6s ease;
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--text-inverse);
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
+}
 
-  &:hover::before {
-    left: 100%;
-  }
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 
-  &-primary {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-    color: var(--text-inverse);
-    box-shadow: 
-      0 4px 15px rgba(57, 197, 187, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-
-    &:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 
-        0 8px 30px rgba(57, 197, 187, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-        0 0 40px rgba(57, 197, 187, 0.2);
-    }
-    
-    &:active {
-      transform: translateY(-2px) scale(1);
-    }
-    
-    // 发光按钮额外效果
-    &.btn-glow {
-      animation: btn-pulse 3s ease-in-out infinite;
-      
-      .btn-shine {
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      
-      &:hover .btn-shine {
-        opacity: 1;
-        animation: shine-rotate 3s linear infinite;
-      }
-    }
-  }
-
-  &-secondary {
-    background: transparent;
+  &:hover {
+    border-color: var(--primary-color);
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+  }
+}
 
-    &:hover {
-      background: var(--primary-color);
-      color: var(--text-inverse);
-    }
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background: var(--background-secondary);
   }
 
-  &-ghost {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(10px);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: var(--primary-color);
-      color: var(--primary-color);
-    }
-  }
-
-  &-warning {
-    background: var(--gradient-accent);
-    color: var(--text-inverse);
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-glow);
-    }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
 // ============================================
-// 通用区块样式
+// Sections
 // ============================================
+
+.section {
+  padding: 5rem 0;
+}
+
+.section-alt {
+  background: var(--background-secondary);
+}
 
 .section-header {
   text-align: center;
-  margin-bottom: @spacing-xl;
+  margin-bottom: 3rem;
 }
 
 .section-title {
-  font-size: @font-size-4xl;
-  margin-bottom: @spacing-sm;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
   color: var(--text-primary);
-  font-weight: @font-weight-bold;
 }
 
 .section-subtitle {
   color: var(--text-secondary);
-  font-size: @font-size-lg;
-  margin-bottom: @spacing-md;
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
 }
 
 .section-line {
-  width: 80px;
-  height: 4px;
-  background: var(--gradient-primary);
+  width: 48px;
+  height: 3px;
+  background: var(--primary-color);
   margin: 0 auto;
-  border-radius: @border-radius-full;
+  border-radius: 999px;
 }
 
 // ============================================
-// 特性区域
+// Features Grid
 // ============================================
 
-.features {
-  padding: 0;
-  background: var(--background-primary);
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 
-  &-container {
-    display: flex;
-    flex-direction: column;
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 }
 
-.feature-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: @spacing-3xl 0;
-  overflow: hidden;
-  transform: translateZ(0);
-  will-change: transform;
-  contain: layout style paint;
+.feature-card {
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 
-  &:nth-child(even) {
-    background: var(--background-secondary);
+  &:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   }
 
-  &:nth-child(odd) {
-    background: var(--background-primary);
-  }
-
-  .feature-number,
-  .feature-headline,
-  .feature-description {
-    opacity: 0;
-    will-change: opacity, transform;
-  }
-
-  &.is-visible {
-    .feature-number {
-      animation: fadeInScale 0.8s ease forwards 0.2s;
-    }
-
-    .feature-headline {
-      animation: slideUpFadeIn 1s ease forwards 0.3s;
-    }
-
-    .feature-description {
-      animation: slideUpFadeIn 1s ease forwards 0.5s;
-    }
-  }
-}
-
-.feature-content {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 @spacing-md;
-  display: flex;
-  align-items: center;
-  gap: @spacing-3xl;
-  position: relative;
-  z-index: 2;
-
-  @media (max-width: @breakpoint-lg) {
-    flex-direction: column;
-    gap: @spacing-xl;
-    text-align: center;
-  }
-
-  @media (max-width: @breakpoint-md) {
-    padding: 0 @spacing-sm;
-    gap: @spacing-lg;
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
   }
 }
 
 .feature-number {
-  font-size: @font-size-6xl;
-  font-weight: @font-weight-extrabold;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1;
-  opacity: 0.3;
-  flex-shrink: 0;
-
-  @media (max-width: @breakpoint-lg) {
-    font-size: @font-size-5xl;
-  }
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
 }
 
-.feature-main {
-  flex: 1;
-}
-
-.feature-headline {
-  font-size: @font-size-6xl;
-  font-weight: @font-weight-extrabold;
-  line-height: 1.1;
-  margin: 0 0 @spacing-lg 0;
+.feature-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
   color: var(--text-primary);
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transform: translateZ(0) translateY(50px);
-
-  @media (max-width: @breakpoint-lg) {
-    font-size: @font-size-4xl;
-  }
-
-  @media (max-width: @breakpoint-md) {
-    font-size: @font-size-3xl;
-  }
 }
 
-.feature-description {
-  font-size: @font-size-xl;
-  line-height: 1.8;
+.feature-desc {
+  font-size: 0.875rem;
   color: var(--text-secondary);
   margin: 0;
-  max-width: 700px;
-  transform: translateZ(0) translateY(30px);
-
-  @media (max-width: @breakpoint-lg) {
-    font-size: @font-size-lg;
-    max-width: 100%;
-  }
-
-  @media (max-width: @breakpoint-md) {
-    font-size: @font-size-base;
-  }
-}
-
-.feature-visual {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.feature-glow-effect {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: var(--gradient-glow);
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.3;
-  animation: float 8s ease-in-out infinite;
-  pointer-events: none;
-  transform: translateZ(0);
-  will-change: transform;
-  contain: layout style paint;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
-    opacity: 0.2;
-    animation: pulse 4s ease-in-out infinite;
-    will-change: transform, opacity;
-  }
-}
-
-// 动画定义
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: translateZ(0) scale(0.8);
-  }
-  to {
-    opacity: 0.3;
-    transform: translateZ(0) scale(1);
-  }
-}
-
-@keyframes slideUpFadeIn {
-  from {
-    opacity: 0;
-    transform: translateZ(0) translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0) translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateZ(0) translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translateZ(0) translate(30px, -30px) scale(1.1);
-  }
-  66% {
-    transform: translateZ(0) translate(-20px, 20px) scale(0.9);
-  }
-}
-
-// 滚动视差效果
-@media (prefers-reduced-motion: no-preference) {
-  .feature-section {
-    &:nth-child(1) .feature-glow-effect { top: 10%; right: 10%; }
-    &:nth-child(2) .feature-glow-effect { bottom: 20%; left: 15%; }
-    &:nth-child(3) .feature-glow-effect { top: 30%; left: 20%; }
-    &:nth-child(4) .feature-glow-effect { bottom: 15%; right: 25%; }
-    &:nth-child(5) .feature-glow-effect { top: 25%; right: 15%; }
-    &:nth-child(6) .feature-glow-effect { bottom: 30%; left: 10%; }
-  }
+  line-height: 1.6;
 }
 
 // ============================================
-// 下载区域
+// Download
 // ============================================
-
-.download {
-  padding: @spacing-3xl 0;
-  position: relative;
-  z-index: 1;
-}
 
 .version-info {
-  .flex-between();
-  background: var(--card-background);
-  border: 2px solid var(--primary-color);
-  border-radius: @border-radius-lg;
-  padding: @spacing-lg;
-  margin-bottom: @spacing-xl;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-glow);
-    opacity: 0.5;
-    pointer-events: none;
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
   }
 }
 
 .version-badge {
   display: flex;
   align-items: center;
-  gap: @spacing-md;
-  position: relative;
-  z-index: 2;
-
-  .version-pulse {
-    width: 12px;
-    height: 12px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  .version-label {
-    color: var(--text-secondary);
-    font-size: @font-size-sm;
-  }
-
-  .version-number {
-    background: var(--gradient-primary);
-    color: var(--text-inverse);
-    padding: @spacing-xs @spacing-md;
-    border-radius: @border-radius-md;
-    font-weight: @font-weight-bold;
-    font-size: @font-size-sm;
-  }
+  gap: 0.75rem;
 }
 
-.btn-refresh {
-  display: flex;
-  align-items: center;
-  gap: @spacing-xs;
-  background: var(--background-secondary);
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-  padding: @spacing-xs @spacing-md;
-  border-radius: @border-radius-md;
-  font-size: @font-size-sm;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover:not(:disabled) {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+.version-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 50%;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.version-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.version-number {
+  background: var(--primary-color);
+  color: var(--text-inverse);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.8rem;
 }
 
 .download-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: @spacing-xl;
+  gap: 2rem;
   align-items: start;
 
-  @media (max-width: @breakpoint-md) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 }
 
 .download-info {
   h3 {
-    margin-bottom: @spacing-md;
+    margin: 0 0 1rem;
+    font-weight: 700;
     color: var(--text-primary);
-    font-weight: @font-weight-bold;
   }
+}
 
-  .requirements-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
-    li {
-      padding: @spacing-sm;
-      border-bottom: 1px solid var(--border-color);
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: @spacing-sm;
+  li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
 
-      &::before {
-        content: '✓';
-        color: var(--primary-color);
-        font-weight: bold;
-      }
+    &::before {
+      content: '\2713';
+      color: var(--primary-color);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
 
-      a {
-        color: var(--primary-color);
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
+    a {
+      color: var(--primary-color);
+      &:hover { text-decoration: underline; }
     }
   }
 }
@@ -1909,38 +1061,37 @@ const clients = [
 .download-actions {
   display: flex;
   flex-direction: column;
-  gap: @spacing-md;
+  gap: 0.75rem;
 }
 
 .download-btn {
   display: flex;
   align-items: center;
-  padding: @spacing-md @spacing-lg;
-  background: var(--card-background);
-  border: 2px solid var(--border-color);
-  border-radius: @border-radius-lg;
+  padding: 1rem 1.25rem;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
   text-decoration: none;
   color: var(--text-primary);
-  transition: all 0.3s ease;
+  transition: border-color 0.2s, transform 0.2s;
+
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
+  }
 
   &:hover {
     border-color: var(--primary-color);
-    transform: translateX(5px);
-    box-shadow: var(--shadow-glow-subtle);
+    transform: translateX(4px);
 
     .download-arrow {
-      transform: translateX(5px);
+      transform: translateX(4px);
     }
   }
 
   &.primary {
-    background: var(--gradient-primary);
+    background: var(--primary-color);
     color: var(--text-inverse);
-    border: none;
-
-    &:hover {
-      box-shadow: var(--shadow-glow);
-    }
+    border-color: transparent;
   }
 
   .download-text {
@@ -1948,107 +1099,115 @@ const clients = [
     display: flex;
     flex-direction: column;
 
-    strong {
-      font-size: @font-size-lg;
-      margin-bottom: 2px;
-    }
-
+    strong { font-size: 0.95rem; }
     small {
-      opacity: 0.8;
-      font-size: @font-size-sm;
+      opacity: 0.7;
+      font-size: 0.8rem;
+      margin-top: 2px;
     }
   }
 
   .download-arrow {
-    font-size: @font-size-xl;
-    transition: transform 0.3s ease;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
   }
 }
 
 .prerelease-alert {
   display: flex;
   align-items: center;
-  gap: @spacing-lg;
-  background: var(--gradient-accent);
-  border-radius: @border-radius-lg;
-  padding: @spacing-lg;
-  margin-top: @spacing-xl;
+  gap: 1.5rem;
+  background: var(--primary-color);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-top: 2rem;
   color: var(--text-inverse);
 
   .alert-content {
     flex: 1;
 
     h4 {
-      margin: 0 0 @spacing-xs 0;
+      margin: 0 0 0.25rem;
+      font-weight: 700;
       color: var(--text-inverse);
     }
-
     p {
       margin: 0;
       opacity: 0.9;
+      font-size: 0.875rem;
     }
+  }
+
+  .btn-outline {
+    color: var(--text-inverse);
+    border-color: rgba(255, 255, 255, 0.4);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.6);
+      color: var(--text-inverse);
+    }
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    text-align: center;
   }
 }
 
 // ============================================
-// 客户端区域
+// Clients
 // ============================================
 
-.clients {
-  padding: @spacing-3xl 0;
-  background: var(--background-secondary);
-  position: relative;
-  z-index: 1;
-
-  &-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: @spacing-lg;
-  }
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
 }
 
 .client-card {
-  background: var(--card-background);
-  border: 1px solid var(--card-border);
-  border-radius: @border-radius-lg;
-  padding: @spacing-lg;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.25rem;
   display: flex;
   align-items: center;
-  gap: @spacing-md;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  gap: 1rem;
+  transition: border-color 0.2s;
+
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
+  }
 
   &:hover {
-    transform: translateY(-5px);
     border-color: var(--primary-color);
-    box-shadow: var(--shadow-glow-subtle);
   }
 
-  .client-info {
-    flex: 1;
-  }
+  .client-info { flex: 1; }
 
   .client-name {
-    margin: 0 0 @spacing-xs 0;
-    font-size: @font-size-lg;
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
     color: var(--text-primary);
-    font-weight: @font-weight-semibold;
   }
 
   .client-platform {
     margin: 0;
-    color: var(--text-secondary);
-    font-size: @font-size-sm;
+    color: var(--text-muted);
+    font-size: 0.8rem;
   }
 
   .client-link {
     color: var(--primary-color);
     text-decoration: none;
-    font-weight: @font-weight-semibold;
-    padding: @spacing-xs @spacing-md;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
     border: 1px solid var(--primary-color);
-    border-radius: @border-radius-md;
-    transition: all 0.3s ease;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
 
     &:hover {
       background: var(--primary-color);
@@ -2058,42 +1217,31 @@ const clients = [
 }
 
 // ============================================
-// Star History 区域
+// Star History
 // ============================================
 
-.stats {
-  padding: @spacing-3xl 0;
-  position: relative;
-  z-index: 1;
-
-  &-actions {
-    .flex-center();
-    gap: @spacing-md;
-    flex-wrap: wrap;
-  }
+.stats-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .star-history-container {
-  background: var(--card-background);
-  border: 1px solid var(--card-border);
-  border-radius: @border-radius-xl;
-  padding: @spacing-xl;
-  margin-bottom: @spacing-xl;
-  min-height: 400px;
-  .flex-center();
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-primary);
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
   }
 }
 
@@ -2101,363 +1249,451 @@ const clients = [
   width: 100%;
   max-width: 800px;
   height: auto;
-  border-radius: @border-radius-md;
+  border-radius: 8px;
 }
 
 .loading-state,
 .error-state {
-  .flex-center();
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  gap: @spacing-md;
-  padding: @spacing-xl;
+  gap: 1rem;
+  padding: 2rem;
   color: var(--text-secondary);
 }
 
 .loading-spinner {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border: 3px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 // ============================================
-// 文档区域
+// Docs
 // ============================================
 
-.docs {
-  padding: @spacing-3xl 0;
-  background: var(--background-secondary);
-  position: relative;
-  z-index: 1;
-
-  &-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: @spacing-lg;
-  }
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
 }
 
 .doc-card {
-  background: var(--card-background);
-  border: 1px solid var(--card-border);
-  border-radius: @border-radius-lg;
-  padding: @spacing-xl;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5rem;
   text-decoration: none;
-  text-align: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
+  transition: border-color 0.2s;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: var(--gradient-primary);
-    transition: width 0.3s ease;
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
   }
 
   &:hover {
-    transform: translateY(-5px);
     border-color: var(--primary-color);
-    box-shadow: var(--shadow-glow-subtle);
-
-    &::after {
-      width: 100%;
-    }
   }
 
   h3 {
-    margin: 0 0 @spacing-sm 0;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
     color: var(--text-primary);
-    font-weight: @font-weight-bold;
   }
 
   p {
     margin: 0;
     color: var(--text-secondary);
-    font-size: @font-size-sm;
+    font-size: 0.85rem;
   }
 }
 
 // ============================================
-// 页脚
+// Sponsors
+// ============================================
+
+.sponsors-tier {
+  margin-bottom: 2.5rem;
+}
+
+.tier-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1rem;
+  text-align: center;
+
+  &.tier-gold { color: #d4a017; }
+  &.tier-silver { color: #8e8e93; }
+  &.tier-bronze { color: #b87333; }
+}
+
+.sponsors-gold-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-gold-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem 2.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 180px;
+
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
+  }
+
+  &:hover {
+    border-color: #d4a017;
+    box-shadow: 0 4px 12px rgba(212, 160, 23, 0.1);
+  }
+
+  .sponsor-logo {
+    max-height: 48px;
+    max-width: 200px;
+  }
+
+  .sponsor-name-lg {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+
+.sponsors-empty {
+  text-align: center;
+  padding: 2rem;
+
+  &.gold-empty {
+    .empty-slot {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 2rem 3rem;
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      color: var(--text-muted);
+      transition: border-color 0.2s, color 0.2s;
+
+      &:hover {
+        border-color: #d4a017;
+        color: #d4a017;
+      }
+
+      svg {
+        opacity: 0.5;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.sponsors-empty-text {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.sponsors-avatar-grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-avatar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.sponsor-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  object-fit: cover;
+  transition: border-color 0.2s;
+
+  .sponsor-avatar-item:hover & {
+    border-color: var(--primary-color);
+  }
+}
+
+.sponsor-avatar-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background-tertiary);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: border-color 0.2s;
+
+  .sponsor-avatar-item:hover & {
+    border-color: var(--primary-color);
+  }
+}
+
+.sponsor-avatar-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.sponsors-name-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-name-tag {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s;
+
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
+  }
+
+  &:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}
+
+.sponsors-cta {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.sponsors-cta-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem;
+}
+
+.sponsors-cta-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-btn-wechat:hover {
+  border-color: #07c160;
+  color: #07c160;
+}
+
+.sponsor-btn-alipay:hover {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+// ============================================
+// Footer
 // ============================================
 
 .footer {
   background: var(--background-dark);
   color: var(--text-inverse);
-  padding: @spacing-xl 0 @spacing-md;
-  position: relative;
-  z-index: 1;
+  padding: 3rem 0 1.5rem;
+}
 
-  &-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: @spacing-xl;
-    margin-bottom: @spacing-xl;
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section {
+  h4 {
+    margin: 0 0 1rem;
+    font-weight: 600;
+    color: var(--text-inverse);
+    font-size: 0.95rem;
   }
 
-  &-section {
-    h4 {
-      margin: 0 0 @spacing-md 0;
-      color: var(--text-inverse);
-      font-weight: @font-weight-semibold;
-    }
-
-    p {
-      margin: 0;
-      color: var(--text-muted);
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    li {
-      margin-bottom: @spacing-xs;
-    }
-
-    a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: var(--primary-color);
-      }
-    }
+  p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
   }
 
-  &-brand {
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: @spacing-sm;
-      margin-bottom: @spacing-sm;
-
-      h4 {
-        margin: 0;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-    }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  &-bottom {
-    border-top: 1px solid var(--border-dark);
-    padding-top: @spacing-md;
-    text-align: center;
+  li { margin-bottom: 0.5rem; }
 
-    p {
-      margin: 0;
-      color: var(--text-muted);
-      font-size: @font-size-sm;
-    }
+  a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+
+    &:hover { color: var(--primary-color); }
+  }
+}
+
+.footer-logo-text {
+  color: var(--primary-color) !important;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border-dark);
+  padding-top: 1rem;
+  text-align: center;
+
+  p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
   }
 }
 
 .beian-row {
-  margin-top: @spacing-sm;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: @spacing-md;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .beian-item {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   color: var(--text-muted);
-  font-size: @font-size-sm;
+  font-size: 0.8rem;
   text-decoration: none;
 
-  &:hover {
-    color: var(--primary-color);
-  }
+  &:hover { color: var(--primary-color); }
 }
 
 .beian-badge {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 // ============================================
-// 响应式设计
+// Responsive
 // ============================================
 
-@media (max-width: @breakpoint-md) {
-  // Header 响应式
+@media (max-width: 768px) {
   .nav {
     flex-wrap: wrap;
-    padding: @spacing-xs 0;
-    gap: @spacing-sm;
+    gap: 0.75rem;
   }
-  
-  .logo {
-    &-badge {
-      display: none;
-    }
-    
-    &-name {
-      font-size: @font-size-base;
-    }
-    
-    &-icon {
-      width: 36px;
-      height: 36px;
-      
-      .logo-emoji {
-        font-size: @font-size-xl;
-      }
-    }
-  }
-  
+
   .nav-center {
     order: 3;
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
     gap: 2px;
-    padding: 3px;
-    margin-top: @spacing-xs;
   }
-  
+
   .nav-link {
-    font-size: @font-size-xs;
-    padding: 6px 10px;
-  }
-  
-  .nav-controls {
-    gap: @spacing-xs;
-  }
-  
-  .theme-toggle {
-    width: 36px;
-    height: 36px;
-    
-    .theme-icon {
-      font-size: @font-size-base;
-    }
-  }
-  
-  .lang-toggle {
-    padding: 8px 12px;
-    font-size: @font-size-xs;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.5rem;
   }
 
-  // Hero 响应式优化
+  .logo-badge {
+    display: none;
+  }
+
   .hero {
-    min-height: 85vh;
-    padding: @spacing-3xl 0 @spacing-xl;
-    
-    &-aurora .aurora-layer {
-      filter: blur(60px);
-      opacity: 0.3;
-    }
-    
-    &-speed-lines {
-      display: none; // 移动端隐藏极速线条
-    }
-    
-    &-waves {
-      height: 120px;
-    }
-    
-    &-glow-orbs .glow-orb {
-      filter: blur(40px);
-      opacity: 0.3;
-      
-      &.orb-1 { width: 200px; height: 200px; }
-      &.orb-2 { width: 150px; height: 150px; }
-      &.orb-3 { display: none; }
-    }
-    
-    &-stars .star {
-      width: 3px;
-      height: 3px;
-    }
-  }
-
-  .hero-title {
-    font-size: @font-size-4xl;
-    
-    .title-shimmer {
-      display: none;
-    }
-  }
-
-  .hero-subtitle {
-    font-size: @font-size-base;
-    padding: 0 @spacing-sm;
+    padding: 4rem 0 3rem;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: center;
-    gap: @spacing-sm;
-    
+
     .btn {
       width: 100%;
-      max-width: 280px;
+      max-width: 260px;
       justify-content: center;
     }
   }
 
-  .hero-badge {
-    font-size: @font-size-xs;
-    padding: @spacing-xs @spacing-md;
-  }
-
-  .nav {
+  .hero-stats {
     flex-direction: column;
-    gap: @spacing-sm;
+    gap: 0.5rem;
+
+    .stat-divider { display: none; }
   }
 
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: @spacing-sm;
+  .section {
+    padding: 3rem 0;
+  }
 
-    a {
-      font-size: @font-size-sm;
-    }
+  .section-title {
+    font-size: 1.5rem;
   }
 
   .version-info {
     flex-direction: column;
-    gap: @spacing-md;
+    gap: 0.75rem;
     text-align: center;
-  }
-
-  .hero-stats {
-    flex-direction: column;
-    gap: @spacing-sm;
-    padding: @spacing-sm @spacing-md;
-
-    .stat-divider {
-      display: none;
-    }
   }
 
   .prerelease-alert {
     flex-direction: column;
     text-align: center;
-  }
-
-  .section-title {
-    font-size: @font-size-3xl;
   }
 }
 </style>
