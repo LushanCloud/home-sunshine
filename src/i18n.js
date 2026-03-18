@@ -12,7 +12,8 @@ export const translations = {
       download: '下载',
       clients: '客户端',
       stats: 'Star History',
-      docs: '文档'
+      docs: '文档',
+      sponsors: '赞助'
     },
     hero: {
       download: '立即下载',
@@ -96,6 +97,20 @@ export const translations = {
       qqGroup: 'QQ 交流群',
       qqGroupDesc: '加入社区获取帮助'
     },
+    sponsors: {
+      title: '感谢赞助者',
+      subtitle: '正是他们的支持让这个项目得以持续发展',
+      becomeSponsor: '成为赞助者',
+      ifdian: '爱发电赞助',
+      wechat: '微信赞赏',
+      alipay: '支付宝赞赏',
+      gold: '金牌赞助者',
+      silver: '银牌赞助者',
+      bronze: '铜牌赞助者',
+      emptyGold: '虚位以待，等待您的加入',
+      emptySilver: '您的名字将展示在这里',
+      emptyBronze: '支持开源，从小额开始'
+    },
     footer: {
       title: '瑶光流梦',
       subtitle: '让游戏串流更优雅',
@@ -116,7 +131,8 @@ export const translations = {
       download: 'Download',
       clients: 'Clients',
       stats: 'Star History',
-      docs: 'Docs'
+      docs: 'Docs',
+      sponsors: 'Sponsors'
     },
     hero: {
       download: 'Download Now',
@@ -199,6 +215,20 @@ export const translations = {
       officialDocsDesc: 'LizardByte official documentation reference',
       qqGroup: 'QQ Group',
       qqGroupDesc: 'Join the community for help'
+    },
+    sponsors: {
+      title: 'Sponsors',
+      subtitle: 'Their support makes this project possible',
+      becomeSponsor: 'Become a Sponsor',
+      ifdian: 'Afdian (ifdian)',
+      wechat: 'WeChat Pay',
+      alipay: 'Alipay',
+      gold: 'Gold Sponsors',
+      silver: 'Silver Sponsors',
+      bronze: 'Bronze Sponsors',
+      emptyGold: 'Your logo here — become the first!',
+      emptySilver: 'Your name will appear here',
+      emptyBronze: 'Support open source, start small'
     },
     footer: {
       title: 'SDream',

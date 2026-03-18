@@ -164,6 +164,19 @@ const clients = [
     link: 'https://apps.apple.com/cn/app/voidlink/id6747717070',
   },
 ]
+
+// 赞助者数据
+const sponsors = {
+  gold: [
+    // { name: 'Example Corp', logo: '/sponsors/example.png', url: 'https://example.com' }
+  ],
+  silver: [
+    // { name: 'Alice', url: 'https://github.com/alice', avatar: 'https://avatars.githubusercontent.com/u/xxx' }
+  ],
+  bronze: [
+    // { name: 'Bob', url: 'https://github.com/bob' }
+  ],
+}
 </script>
 
 <template>
@@ -183,6 +196,7 @@ const clients = [
             <a href="#clients" class="nav-link">{{ t.nav.clients }}</a>
             <a href="#stats" class="nav-link">{{ t.nav.stats }}</a>
             <a href="#docs" class="nav-link">{{ t.nav.docs }}</a>
+            <a href="#sponsors" class="nav-link">{{ t.nav.sponsors }}</a>
           </div>
 
           <div class="nav-controls">
@@ -446,6 +460,109 @@ const clients = [
             <h3>{{ t.docs.qqGroup }}</h3>
             <p>{{ t.docs.qqGroupDesc }}</p>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 赞助者展示 -->
+    <section id="sponsors" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">{{ t.sponsors.title }}</h2>
+          <p class="section-subtitle">{{ t.sponsors.subtitle }}</p>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- 金牌赞助者 -->
+        <div class="sponsors-tier">
+          <h3 class="tier-label tier-gold">{{ t.sponsors.gold }}</h3>
+          <div v-if="sponsors.gold.length" class="sponsors-gold-grid">
+            <a
+              v-for="s in sponsors.gold"
+              :key="s.name"
+              :href="s.url"
+              class="sponsor-gold-card"
+              target="_blank"
+              rel="noopener"
+            >
+              <img v-if="s.logo" :src="s.logo" :alt="s.name" class="sponsor-logo" />
+              <span v-else class="sponsor-name-lg">{{ s.name }}</span>
+            </a>
+          </div>
+          <div v-else class="sponsors-empty gold-empty">
+            <div class="empty-slot">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <p>{{ t.sponsors.emptyGold }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 银牌赞助者 -->
+        <div class="sponsors-tier">
+          <h3 class="tier-label tier-silver">{{ t.sponsors.silver }}</h3>
+          <div v-if="sponsors.silver.length" class="sponsors-avatar-grid">
+            <a
+              v-for="s in sponsors.silver"
+              :key="s.name"
+              :href="s.url"
+              class="sponsor-avatar-item"
+              target="_blank"
+              rel="noopener"
+              :title="s.name"
+            >
+              <img v-if="s.avatar" :src="s.avatar" :alt="s.name" class="sponsor-avatar" />
+              <span v-else class="sponsor-avatar-placeholder">{{ s.name.charAt(0) }}</span>
+              <span class="sponsor-avatar-name">{{ s.name }}</span>
+            </a>
+          </div>
+          <p v-else class="sponsors-empty-text">{{ t.sponsors.emptySilver }}</p>
+        </div>
+
+        <!-- 铜牌赞助者 -->
+        <div class="sponsors-tier">
+          <h3 class="tier-label tier-bronze">{{ t.sponsors.bronze }}</h3>
+          <div v-if="sponsors.bronze.length" class="sponsors-name-list">
+            <a
+              v-for="s in sponsors.bronze"
+              :key="s.name"
+              :href="s.url"
+              class="sponsor-name-tag"
+              target="_blank"
+              rel="noopener"
+            >
+              {{ s.name }}
+            </a>
+          </div>
+          <p v-else class="sponsors-empty-text">{{ t.sponsors.emptyBronze }}</p>
+        </div>
+
+        <div class="sponsors-cta">
+          <p class="sponsors-cta-label">{{ t.sponsors.becomeSponsor }}</p>
+          <div class="sponsors-cta-buttons">
+            <a
+              href="https://www.ifdian.net/a/Yundi339"
+              class="btn btn-primary"
+              target="_blank"
+            >
+              {{ t.sponsors.ifdian }}
+            </a>
+            <a
+              href="/wechat-sponsor.png"
+              class="btn btn-outline sponsor-btn-wechat"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.11.24-.245 0-.06-.024-.12-.04-.178l-.327-1.233a.49.49 0 0 1 .177-.554C23.02 18.482 24 16.81 24 14.936c0-3.372-3.265-6.078-7.062-6.078zm-2.036 2.891c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.072 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982z"/></svg>
+              {{ t.sponsors.wechat }}
+            </a>
+            <a
+              href="/alipay-sponsor.png"
+              class="btn btn-outline sponsor-btn-alipay"
+              target="_blank"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.422 15.358c-3.32-1.326-6.092-3.084-6.17-3.133.6-1.202 1.043-2.573 1.259-4.063h-3.49V6.312h4.222V5.187h-4.222V2.531h-2.073s-.041.3-.144.525c-.173.377-.472.637-.472.637h2.689v2.494H8.655v1.125h4.366c-.195 1.205-.568 2.32-1.078 3.318-1.553-.862-3.35-1.48-5.435-1.48-3.492 0-5.538 2.035-5.538 4.28 0 2.246 2.046 4.049 5.538 4.049 2.607 0 4.757-1.078 6.328-2.861.933.56 3.587 2.029 5.716 2.857C21.068 18.663 23 15.523 24 12c-1.028-.273-2.578.358-2.578.358zm-14.97 3.39c-2.532 0-3.813-1.155-3.813-2.636 0-1.482 1.281-2.867 3.813-2.867 1.69 0 3.202.527 4.53 1.299a10.48 10.48 0 0 1-4.53 4.204z"/></svg>
+              {{ t.sponsors.alipay }}
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1197,6 +1314,228 @@ const clients = [
     color: var(--text-secondary);
     font-size: 0.85rem;
   }
+}
+
+// ============================================
+// Sponsors
+// ============================================
+
+.sponsors-tier {
+  margin-bottom: 2.5rem;
+}
+
+.tier-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 1rem;
+  text-align: center;
+
+  &.tier-gold { color: #d4a017; }
+  &.tier-silver { color: #8e8e93; }
+  &.tier-bronze { color: #b87333; }
+}
+
+.sponsors-gold-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-gold-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem 2.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 180px;
+
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
+  }
+
+  &:hover {
+    border-color: #d4a017;
+    box-shadow: 0 4px 12px rgba(212, 160, 23, 0.1);
+  }
+
+  .sponsor-logo {
+    max-height: 48px;
+    max-width: 200px;
+  }
+
+  .sponsor-name-lg {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+
+.sponsors-empty {
+  text-align: center;
+  padding: 2rem;
+
+  &.gold-empty {
+    .empty-slot {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 2rem 3rem;
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      color: var(--text-muted);
+      transition: border-color 0.2s, color 0.2s;
+
+      &:hover {
+        border-color: #d4a017;
+        color: #d4a017;
+      }
+
+      svg {
+        opacity: 0.5;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+.sponsors-empty-text {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.sponsors-avatar-grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-avatar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.sponsor-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  object-fit: cover;
+  transition: border-color 0.2s;
+
+  .sponsor-avatar-item:hover & {
+    border-color: var(--primary-color);
+  }
+}
+
+.sponsor-avatar-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--background-tertiary);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: border-color 0.2s;
+
+  .sponsor-avatar-item:hover & {
+    border-color: var(--primary-color);
+  }
+}
+
+.sponsor-avatar-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.sponsors-name-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-name-tag {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: var(--background-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s;
+
+  [data-theme="chocolate"] & {
+    background: var(--background-tertiary);
+  }
+
+  &:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+}
+
+.sponsors-cta {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.sponsors-cta-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem;
+}
+
+.sponsors-cta-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sponsor-btn-wechat:hover {
+  border-color: #07c160;
+  color: #07c160;
+}
+
+.sponsor-btn-alipay:hover {
+  border-color: #1677ff;
+  color: #1677ff;
 }
 
 // ============================================
