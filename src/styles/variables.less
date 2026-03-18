@@ -70,20 +70,16 @@
 // ============================================
 // 渐变色
 // ============================================
-@gradient-primary: var(--gradient-primary, linear-gradient(135deg, #39c5bb 0%, #00d4ff 100%));
-@gradient-secondary: var(--gradient-secondary, linear-gradient(135deg, #39c5bb 0%, #2ba39a 100%));
-@gradient-accent: var(--gradient-accent, linear-gradient(135deg, #39c5bb 0%, #00d4ff 50%, #7c3aed 100%));
-@gradient-glow: var(--gradient-glow, radial-gradient(circle, rgba(57, 197, 187, 0.15) 0%, transparent 70%));
+@gradient-primary: var(--primary-color);
+@gradient-secondary: var(--primary-dark, #2ba39a);
 
 // ============================================
 // 阴影
 // ============================================
-@shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-@shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-@shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-@shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
-@shadow-glow: var(--shadow-glow, 0 0 30px rgba(57, 197, 187, 0.3));
-@shadow-glow-strong: var(--shadow-glow-strong, 0 0 60px rgba(57, 197, 187, 0.4));
+@shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+@shadow-md: 0 2px 4px rgba(0, 0, 0, 0.06);
+@shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.08);
+@shadow-xl: 0 8px 20px rgba(0, 0, 0, 0.1);
 
 // ============================================
 // 圆角
@@ -175,9 +171,4 @@
 @z-popover: 1060;
 @z-tooltip: 1070;
 
-// ============================================
-// 科技感装饰元素
-// ============================================
-@tech-line-color: var(--tech-line-color, rgba(57, 197, 187, 0.3));
-@tech-dot-color: var(--tech-dot-color, rgba(57, 197, 187, 0.5));
-@tech-grid-color: var(--tech-grid-color, rgba(57, 197, 187, 0.1));
+
