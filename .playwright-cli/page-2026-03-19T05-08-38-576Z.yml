@@ -1,0 +1,231 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - navigation [ref=e6]:
+        - link "瑶光流梦 Beta" [ref=e7] [cursor=pointer]:
+          - /url: "#"
+          - generic [ref=e8]: 瑶光流梦
+          - generic [ref=e9]: Beta
+        - generic [ref=e10]:
+          - link "特性" [ref=e11] [cursor=pointer]:
+            - /url: "#features"
+          - link "下载" [ref=e12] [cursor=pointer]:
+            - /url: "#download"
+          - link "客户端" [ref=e13] [cursor=pointer]:
+            - /url: "#clients"
+          - link "Star History" [ref=e14] [cursor=pointer]:
+            - /url: "#stats"
+          - link "文档" [ref=e15] [cursor=pointer]:
+            - /url: "#docs"
+          - link "赞助" [ref=e16] [cursor=pointer]:
+            - /url: "#sponsors"
+        - generic [ref=e17]:
+          - button "Gura 蓝" [ref=e18] [cursor=pointer]:
+            - img [ref=e19]
+          - button "EN" [ref=e25] [cursor=pointer]
+    - generic [ref=e28]:
+      - paragraph [ref=e29]: Game Streaming Platform
+      - heading "让游戏串流更优雅" [level=1] [ref=e30]
+      - paragraph [ref=e31]: Sunshine, a self-hosted game-stream host for Moonlight, now features an HDR-friendly fork that integrates virtual displays and control panels.
+      - generic [ref=e32]:
+        - link "立即下载" [ref=e33] [cursor=pointer]:
+          - /url: https://github.com/qiin2333/Sunshine-Foundation/releases/latest
+        - link "GitHub Releases" [ref=e34] [cursor=pointer]:
+          - /url: https://github.com/qiin2333/Sunshine-Foundation/releases/
+        - link "镜像下载" [ref=e35] [cursor=pointer]:
+          - /url: https://github.com/qiin2333/Sunshine-Foundation/releases/latest
+      - generic [ref=e36]:
+        - generic [ref=e37]: Low Latency
+        - generic [ref=e39]: HDR Support
+        - generic [ref=e41]: Virtual Display
+    - generic [ref=e43]:
+      - heading "核心特性" [level=2] [ref=e45]
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]: "01"
+          - heading "HDR友好支持" [level=3] [ref=e50]
+          - paragraph [ref=e51]: 经过优化的HDR处理管线，提供真正的HDR游戏流媒体体验
+        - generic [ref=e52]:
+          - generic [ref=e53]: "02"
+          - heading "虚拟显示器" [level=3] [ref=e54]
+          - paragraph [ref=e55]: 内置虚拟显示器管理，无需额外软件即可创建和管理虚拟显示器
+        - generic [ref=e56]:
+          - generic [ref=e57]: "03"
+          - heading "远程麦克风" [level=3] [ref=e58]
+          - paragraph [ref=e59]: 支持接收客户端麦克风，提供高音质的语音直通功能
+        - generic [ref=e60]:
+          - generic [ref=e61]: "04"
+          - heading "低延迟传输" [level=3] [ref=e62]
+          - paragraph [ref=e63]: 结合最新硬件能力优化的编码处理，提供流畅的游戏体验
+        - generic [ref=e64]:
+          - generic [ref=e65]: "05"
+          - heading "高级控制面板" [level=3] [ref=e66]
+          - paragraph [ref=e67]: 直观的Web控制界面，提供实时监控和配置管理
+        - generic [ref=e68]:
+          - generic [ref=e69]: "06"
+          - heading "智能配对" [level=3] [ref=e70]
+          - paragraph [ref=e71]: 智能管理配对设备的对应配置文件
+    - generic [ref=e73]:
+      - heading "下载 瑶光流梦" [level=2] [ref=e75]
+      - generic [ref=e212]:
+        - generic [ref=e213]:
+          - generic [ref=e215]: 最新版本
+          - generic [ref=e216]: v2026.318.35147.杂鱼
+        - button "检查更新" [ref=e217] [cursor=pointer]
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - heading "系统要求" [level=3] [ref=e82]
+          - list [ref=e83]:
+            - listitem [ref=e84]: "✓ 系统: Windows10 22H2+"
+            - listitem [ref=e85]: "✓ CPU: Intel Core i3 / AMD Ryzen 3 以上"
+            - listitem [ref=e86]:
+              - text: "✓ GPU: 支持硬件编码的显卡, 支持VCE 1.0或更高版本, Intel VAAPI / AMD VCE /"
+              - link "Nvidia NVENC" [ref=e87] [cursor=pointer]:
+                - /url: https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new
+            - listitem [ref=e88]: "✓ RAM: 4GB 或更多"
+            - listitem [ref=e89]: "✓ 网络: 5GHz, 802.11ac"
+        - generic [ref=e90]:
+          - link "Windows 最新版 v2026.318.35147.杂鱼 →" [ref=e218] [cursor=pointer]:
+            - /url: https://github.com/qiin2333/Sunshine-Foundation/releases/latest
+            - generic [ref=e92]:
+              - strong [ref=e93]: Windows 最新版
+              - generic [ref=e94]: v2026.318.35147.杂鱼
+            - generic [ref=e95]: →
+          - link "所有版本 GitHub Releases →" [ref=e96] [cursor=pointer]:
+            - /url: https://github.com/qiin2333/Sunshine-Foundation/releases/
+            - generic [ref=e97]:
+              - strong [ref=e98]: 所有版本
+              - generic [ref=e99]: GitHub Releases
+            - generic [ref=e100]: →
+          - link "镜像下载 国内加速 →" [ref=e101] [cursor=pointer]:
+            - /url: https://github.com/qiin2333/Sunshine-Foundation/releases/latest
+            - generic [ref=e102]:
+              - strong [ref=e103]: 镜像下载
+              - generic [ref=e104]: 国内加速
+            - generic [ref=e105]: →
+      - generic [ref=e219]:
+        - generic [ref=e220]:
+          - heading "预发布版本可用" [level=4] [ref=e221]
+          - paragraph [ref=e222]:
+            - text: 发现新的预发布版本
+            - strong [ref=e223]: ZakoVDD
+        - link "查看预发布版本" [ref=e224] [cursor=pointer]:
+          - /url: https://github.com/qiin2333/foundation-sunshine/releases/tag/ZakoVDD
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - heading "推荐的 Moonlight 客户端" [level=2] [ref=e109]
+        - paragraph [ref=e110]: 建议使用以下经过优化的客户端获得最佳的串流体验
+      - generic [ref=e112]:
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - heading "Moonlight-PC" [level=3] [ref=e115]
+            - paragraph [ref=e116]: Windows/macOS/Linux
+          - link "下载 →" [ref=e117] [cursor=pointer]:
+            - /url: https://github.com/qiin2333/moonlight-qt
+        - generic [ref=e118]:
+          - generic [ref=e119]:
+            - heading "VPLUS Moonlight-Android" [level=3] [ref=e120]
+            - paragraph [ref=e121]: Android
+          - link "下载 →" [ref=e122] [cursor=pointer]:
+            - /url: https://github.com/qiin2333/moonlight-vplus
+        - generic [ref=e123]:
+          - generic [ref=e124]:
+            - heading "王冠版 Moonlight-Android" [level=3] [ref=e125]
+            - paragraph [ref=e126]: Android
+          - link "下载 →" [ref=e127] [cursor=pointer]:
+            - /url: https://github.com/WACrown/moonlight-android
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - heading "VoidLink (Moonlight-iOS)" [level=3] [ref=e130]
+            - paragraph [ref=e131]: iOS
+          - link "下载 →" [ref=e132] [cursor=pointer]:
+            - /url: https://apps.apple.com/cn/app/voidlink/id6747717070
+    - generic [ref=e134]:
+      - generic [ref=e135]:
+        - heading "Star History" [level=2] [ref=e136]
+        - paragraph [ref=e137]: 查看项目的 GitHub Star 增长趋势
+      - img "瑶光流梦 Star History" [ref=e140]
+      - generic [ref=e141]:
+        - link "给个 Star" [ref=e142] [cursor=pointer]:
+          - /url: https://github.com/qiin2333/Sunshine-Foundation
+        - link "查看详细统计" [ref=e143] [cursor=pointer]:
+          - /url: https://star-history.com/#qiin2333/Sunshine-Foundation&Date
+    - generic [ref=e145]:
+      - heading "文档与支持" [level=2] [ref=e147]
+      - generic [ref=e149]:
+        - link "使用文档 详细的使用指南和配置说明" [ref=e150] [cursor=pointer]:
+          - /url: https://docs.qq.com/aio/DSGdQc3htbFJjSFdO?p=YTpMj5JNNdB5hEKJhhqlSB
+          - heading "使用文档" [level=3] [ref=e151]
+          - paragraph [ref=e152]: 详细的使用指南和配置说明
+        - link "官方文档 LizardByte 官方文档参考" [ref=e153] [cursor=pointer]:
+          - /url: https://docs.lizardbyte.dev/projects/sunshine/latest/
+          - heading "官方文档" [level=3] [ref=e154]
+          - paragraph [ref=e155]: LizardByte 官方文档参考
+        - link "QQ 交流群 加入社区获取帮助" [ref=e156] [cursor=pointer]:
+          - /url: https://qm.qq.com/cgi-bin/qm/qr?k=5qnkzSaLIrIaU4FvumftZH_6Hg7fUuLD&jump_from=webapi
+          - heading "QQ 交流群" [level=3] [ref=e157]
+          - paragraph [ref=e158]: 加入社区获取帮助
+    - generic [ref=e160]:
+      - generic [ref=e161]:
+        - heading "感谢赞助者" [level=2] [ref=e162]
+        - paragraph [ref=e163]: 正是他们的支持让这个项目得以持续发展
+      - generic [ref=e165]:
+        - heading "金牌赞助者" [level=3] [ref=e166]
+        - link "TOP SPONSOR 果真云 果真云 gzydn.cn →" [ref=e168] [cursor=pointer]:
+          - /url: https://www.gzydn.cn
+          - generic [ref=e169]: TOP SPONSOR
+          - generic [ref=e170]:
+            - generic [ref=e171]:
+              - img "果真云" [ref=e172]
+              - generic [ref=e173]: 果真云
+            - generic [ref=e174]: gzydn.cn
+          - generic [ref=e175]: →
+      - generic [ref=e176]:
+        - heading "银牌赞助者" [level=3] [ref=e177]
+        - paragraph [ref=e178]: 您的名字将展示在这里
+      - generic [ref=e179]:
+        - heading "铜牌赞助者" [level=3] [ref=e180]
+        - paragraph [ref=e181]: 支持开源，从小额开始
+      - generic [ref=e182]:
+        - paragraph [ref=e183]: 成为赞助者
+        - generic [ref=e184]:
+          - link "爱发电赞助" [ref=e185] [cursor=pointer]:
+            - /url: https://www.ifdian.net/a/Yundi339
+          - button "微信赞赏" [active] [ref=e186] [cursor=pointer]:
+            - img [ref=e187]
+            - text: 微信赞赏
+          - link "支付宝赞赏" [ref=e189] [cursor=pointer]:
+            - /url: /alipay-sponsor.png
+            - img [ref=e190]
+            - text: 支付宝赞赏
+    - contentinfo [ref=e192]:
+      - generic [ref=e193]:
+        - generic [ref=e194]:
+          - generic [ref=e195]:
+            - heading "瑶光流梦" [level=4] [ref=e196]
+            - paragraph [ref=e197]: 让游戏串流更优雅
+          - generic [ref=e198]:
+            - heading "相关链接" [level=4] [ref=e199]
+            - list [ref=e200]:
+              - listitem [ref=e201]:
+                - link "GitHub" [ref=e202] [cursor=pointer]:
+                  - /url: https://github.com/qiin2333/Sunshine-Foundation
+              - listitem [ref=e203]:
+                - link "awesome-sunshine" [ref=e204] [cursor=pointer]:
+                  - /url: https://github.com/LizardByte/awesome-sunshine
+        - generic [ref=e205]:
+          - paragraph [ref=e206]: © 2024 瑶光流梦. 基于 LizardByte/Sunshine 修改.
+          - generic [ref=e207]:
+            - generic [ref=e208]:
+              - img "公安备案警徽" [ref=e209]
+              - generic [ref=e210]: 川公网安备51130202000571号
+            - link "蜀ICP备2025162900号-3" [ref=e211] [cursor=pointer]:
+              - /url: https://beian.miit.gov.cn/
+  - dialog "微信扫码赞赏工作室" [ref=e225]:
+    - generic [ref=e226]:
+      - button "关闭弹层" [ref=e227] [cursor=pointer]: ×
+      - generic [ref=e228]: 官方收款码
+      - heading "微信扫码赞赏工作室" [level=3] [ref=e229]
+      - paragraph [ref=e230]: 使用微信扫码支付，支持远川工作室持续开发与维护。
+      - img "微信扫码赞赏工作室" [ref=e232]
+      - paragraph [ref=e233]: 赞赏后如需在赞助区展示名称，可以联系工作室补充信息。
