@@ -168,7 +168,7 @@ const clients = [
 // 赞助者数据
 const sponsors = {
   gold: [
-    // { name: 'Example Corp', logo: '/sponsors/example.png', url: 'https://example.com' }
+    { name: '果真云', url: 'https://www.gzydn.cn', logo: '/sponsors/gzydn.png', description: 'gzydn.cn' }
   ],
   silver: [
     // { name: 'Alice', url: 'https://github.com/alice', avatar: 'https://avatars.githubusercontent.com/u/xxx' }
@@ -481,12 +481,19 @@ const sponsors = {
               v-for="s in sponsors.gold"
               :key="s.name"
               :href="s.url"
-              class="sponsor-gold-card"
+              class="sponsor-featured"
               target="_blank"
               rel="noopener"
             >
-              <img v-if="s.logo" :src="s.logo" :alt="s.name" class="sponsor-logo" />
-              <span v-else class="sponsor-name-lg">{{ s.name }}</span>
+              <div class="sponsor-featured-badge">TOP SPONSOR</div>
+              <div class="sponsor-featured-body">
+                <div class="sponsor-featured-header">
+                  <img v-if="s.logo" :src="s.logo" :alt="s.name" class="sponsor-featured-logo" />
+                  <span class="sponsor-featured-name">{{ s.name }}</span>
+                </div>
+                <span v-if="s.description" class="sponsor-featured-desc">{{ s.description }}</span>
+              </div>
+              <span class="sponsor-featured-arrow">&rarr;</span>
             </a>
           </div>
           <div v-else class="sponsors-empty gold-empty">
@@ -1345,37 +1352,94 @@ const sponsors = {
   flex-wrap: wrap;
 }
 
-.sponsor-gold-card {
+.sponsor-featured {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 1.5rem;
   background: var(--background-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.5rem 2.5rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
   text-decoration: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  min-width: 180px;
+  transition: all 0.25s ease;
+  min-width: 320px;
+  max-width: 480px;
+  position: relative;
+  overflow: hidden;
 
   [data-theme="chocolate"] & {
     background: var(--background-tertiary);
   }
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-color);
+  }
+
   &:hover {
-    border-color: #d4a017;
-    box-shadow: 0 4px 12px rgba(212, 160, 23, 0.1);
-  }
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 
-  .sponsor-logo {
-    max-height: 48px;
-    max-width: 200px;
+    .sponsor-featured-arrow {
+      transform: translateX(4px);
+    }
   }
+}
 
-  .sponsor-name-lg {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
+.sponsor-featured-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--primary-color);
+  opacity: 0.6;
+}
+
+.sponsor-featured-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sponsor-featured-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sponsor-featured-logo {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.sponsor-featured-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.sponsor-featured-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.sponsor-featured-arrow {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  transition: transform 0.2s;
+  flex-shrink: 0;
 }
 
 .sponsors-empty {
