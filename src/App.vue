@@ -177,6 +177,17 @@ const sponsors = {
     // { name: 'Bob', url: 'https://github.com/bob' }
   ],
 }
+
+const wechatSponsorModalOpen = ref(false)
+const studioWechatPayImage = '/studio-wechat-pay.webp'
+
+const openWechatSponsorModal = () => {
+  wechatSponsorModalOpen.value = !wechatSponsorModalOpen.value
+}
+
+const closeWechatSponsorModal = () => {
+  wechatSponsorModalOpen.value = false
+}
 </script>
 
 <template>
@@ -553,22 +564,41 @@ const sponsors = {
             >
               {{ t.sponsors.ifdian }}
             </a>
-            <a
-              href="/wechat-sponsor.png"
+            <button
+              type="button"
               class="btn btn-outline sponsor-btn-wechat"
-              target="_blank"
+              @click="openWechatSponsorModal"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.11.24-.245 0-.06-.024-.12-.04-.178l-.327-1.233a.49.49 0 0 1 .177-.554C23.02 18.482 24 16.81 24 14.936c0-3.372-3.265-6.078-7.062-6.078zm-2.036 2.891c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.072 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982z"/></svg>
               {{ t.sponsors.wechat }}
-            </a>
-            <a
-              href="/alipay-sponsor.png"
-              class="btn btn-outline sponsor-btn-alipay"
-              target="_blank"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.422 15.358c-3.32-1.326-6.092-3.084-6.17-3.133.6-1.202 1.043-2.573 1.259-4.063h-3.49V6.312h4.222V5.187h-4.222V2.531h-2.073s-.041.3-.144.525c-.173.377-.472.637-.472.637h2.689v2.494H8.655v1.125h4.366c-.195 1.205-.568 2.32-1.078 3.318-1.553-.862-3.35-1.48-5.435-1.48-3.492 0-5.538 2.035-5.538 4.28 0 2.246 2.046 4.049 5.538 4.049 2.607 0 4.757-1.078 6.328-2.861.933.56 3.587 2.029 5.716 2.857C21.068 18.663 23 15.523 24 12c-1.028-.273-2.578.358-2.578.358zm-14.97 3.39c-2.532 0-3.813-1.155-3.813-2.636 0-1.482 1.281-2.867 3.813-2.867 1.69 0 3.202.527 4.53 1.299a10.48 10.48 0 0 1-4.53 4.204z"/></svg>
-              {{ t.sponsors.alipay }}
-            </a>
+            </button>
+          </div>
+          <div v-if="wechatSponsorModalOpen" class="sponsor-inline-panel">
+            <div class="sponsor-inline-card">
+              <div class="sponsor-inline-header">
+                <div>
+                  <span class="sponsor-inline-badge">{{ t.sponsors.wechatModalBadge }}</span>
+                  <h3 class="sponsor-inline-title">{{ t.sponsors.wechatModalTitle }}</h3>
+                </div>
+                <button
+                  type="button"
+                  class="sponsor-inline-close"
+                  :aria-label="t.sponsors.closeModal"
+                  @click="closeWechatSponsorModal"
+                >
+                  ×
+                </button>
+              </div>
+              <p class="sponsor-inline-subtitle">{{ t.sponsors.wechatModalSubtitle }}</p>
+              <div class="sponsor-inline-qr-wrap">
+                <img
+                  :src="studioWechatPayImage"
+                  :alt="t.sponsors.wechatModalTitle"
+                  class="sponsor-inline-qr"
+                />
+              </div>
+              <p v-if="t.sponsors.wechatModalNote" class="sponsor-inline-note">{{ t.sponsors.wechatModalNote }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -610,6 +640,7 @@ const sponsors = {
         </div>
       </div>
     </footer>
+
   </div>
 </template>
 
@@ -823,6 +854,7 @@ const sponsors = {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.625rem 1.5rem;
   border-radius: 8px;
@@ -832,6 +864,7 @@ const sponsors = {
   cursor: pointer;
   border: none;
   transition: all 0.2s;
+  font-family: inherit;
 }
 
 .btn-primary {
@@ -1356,34 +1389,38 @@ const sponsors = {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background: var(--background-primary);
-  border: 2px solid var(--primary-color);
-  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(212, 160, 23, 0.08), transparent 68%),
+    var(--background-primary);
+  border: 1px solid rgba(212, 160, 23, 0.22);
+  border-radius: 18px;
   padding: 1.5rem 2rem;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   min-width: 320px;
   max-width: 480px;
   position: relative;
   overflow: hidden;
+  box-shadow:
+    0 10px 28px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
 
   [data-theme="chocolate"] & {
-    background: var(--background-tertiary);
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--primary-color);
+    background:
+      linear-gradient(180deg, rgba(212, 160, 23, 0.12), transparent 68%),
+      var(--background-tertiary);
+    border-color: rgba(212, 160, 23, 0.28);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: rgba(212, 160, 23, 0.38);
+    box-shadow:
+      0 18px 42px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82);
 
     .sponsor-featured-arrow {
       transform: translateX(4px);
@@ -1393,13 +1430,17 @@ const sponsors = {
 
 .sponsor-featured-badge {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: 14px;
+  right: 16px;
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--primary-color);
-  opacity: 0.6;
+  color: #b8860b;
+  background: rgba(212, 160, 23, 0.12);
+  border: 1px solid rgba(212, 160, 23, 0.18);
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  opacity: 1;
 }
 
 .sponsor-featured-body {
@@ -1437,7 +1478,7 @@ const sponsors = {
 
 .sponsor-featured-arrow {
   font-size: 1.25rem;
-  color: var(--primary-color);
+  color: #b8860b;
   transition: transform 0.2s;
   flex-shrink: 0;
 }
@@ -1597,9 +1638,118 @@ const sponsors = {
   color: #07c160;
 }
 
-.sponsor-btn-alipay:hover {
-  border-color: #1677ff;
-  color: #1677ff;
+.sponsor-inline-panel {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.sponsor-inline-card {
+  width: min(100%, 420px);
+  padding: 1.5rem;
+  border: 1px solid rgba(7, 193, 96, 0.18);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top, rgba(7, 193, 96, 0.12), transparent 42%),
+    linear-gradient(180deg, #ffffff, #f8fbff);
+  box-shadow:
+    0 28px 80px rgba(4, 12, 24, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.35);
+  text-align: center;
+}
+
+.sponsor-inline-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+}
+
+.sponsor-inline-close {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #4b5563;
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.04);
+  }
+}
+
+.sponsor-inline-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(7, 193, 96, 0.1);
+  color: #07c160;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sponsor-inline-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.sponsor-inline-subtitle {
+  margin: 0.5rem 0 1.25rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.sponsor-inline-qr-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow:
+    inset 0 0 0 1px rgba(7, 193, 96, 0.08),
+    0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.sponsor-inline-qr {
+  display: block;
+  width: min(100%, 300px);
+  height: auto;
+  border-radius: 18px;
+}
+
+.sponsor-inline-note {
+  margin: 1rem 0 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .sponsor-inline-card {
+    width: 100%;
+    border-radius: 22px 22px 16px 16px;
+    padding: 1.25rem 1.1rem 1.1rem;
+  }
+
+  .sponsor-inline-title {
+    font-size: 1.2rem;
+  }
 }
 
 // ============================================
