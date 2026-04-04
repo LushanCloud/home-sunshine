@@ -43,7 +43,7 @@ const themeName = computed(() => {
 const updatePageTitle = () => {
   document.title = currentLang.value === 'zh'
     ? '瑶光流梦 - 让游戏串流更优雅'
-    : 'SDream - Make Game Streaming Greater'
+    : 'AlkaidLab Sunshine - Make Game Streaming Greater'
 }
 
 // 当前语言的翻译内容
@@ -215,7 +215,7 @@ const closeWechatSponsorModal = () => {
     <section class="hero">
       <div class="container">
         <div class="hero-content">
-          <p class="hero-badge">Game Streaming Platform</p>
+          <p class="hero-badge">{{ t.hero.badge }}</p>
           <h1 class="hero-title">{{ t.tagline }}</h1>
           <p class="hero-subtitle">{{ t.subtitle }}</p>
           <div class="hero-actions">
@@ -230,11 +230,11 @@ const closeWechatSponsorModal = () => {
             </a>
           </div>
           <div class="hero-stats">
-            <span class="stat-item">Low Latency</span>
+            <span class="stat-item">{{ t.hero.stats[0] }}</span>
             <span class="stat-divider"></span>
-            <span class="stat-item">HDR Support</span>
+            <span class="stat-item">{{ t.hero.stats[1] }}</span>
             <span class="stat-divider"></span>
-            <span class="stat-item">Virtual Display</span>
+            <span class="stat-item">{{ t.hero.stats[2] }}</span>
           </div>
         </div>
       </div>
@@ -502,11 +502,6 @@ const closeWechatSponsorModal = () => {
               <p>{{ t.sponsors.emptyCommercial }}</p>
             </div>
           </div>
-        </div>
-
-        <!-- 赞助者 -->
-        <div class="sponsors-users-header">
-          <h3 class="tier-label">{{ t.sponsors.usersTitle }}</h3>
         </div>
 
         <!-- 金牌赞助者 -->
