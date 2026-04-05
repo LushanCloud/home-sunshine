@@ -1,0 +1,20 @@
+{
+  "sponsors": [
+    {
+      "name": "果真云",
+      "url": "http://www.gzydn.cn",
+      "logo": "/sponsors/gzydn.png",
+      "description": "gzydn.cn"
+    }
+  ],
+  "users": {
+    "gold": [
+      {
+        "name": "无**森",
+        "avatar": "/sponsors/65613d49924b179421d6644c316dd57e.png"
+      }
+    ],
+    "silver": [],
+    "bronze": []
+  }
+}

@@ -6,7 +6,7 @@ export const translations = {
   zh: {
     title: '瑶光流梦',
     tagline: '让游戏串流更优雅',
-    subtitle: 'Sunshine, a self-hosted game-stream host for Moonlight, now features an HDR-friendly fork that integrates virtual displays and control panels.',
+      subtitle: 'Sunshine，一个自托管的 Moonlight 游戏串流服务端，现已提供 HDR 友好的分支版本，集成了虚拟显示器和控制面板等功能。',
     nav: {
       features: '特性',
       download: '下载',
@@ -16,9 +16,11 @@ export const translations = {
       sponsors: '赞助'
     },
     hero: {
+      badge: '游戏串流平台',
       download: '立即下载',
-      github: 'GitHub Releases',
-      mirror: '镜像下载'
+      github: 'GitHub开源仓库',
+      mirror: '镜像下载',
+      stats: ['低延迟', 'HDR 支持', '基地虚拟显示器']
     },
     features: {
       title: '核心特性',
@@ -50,7 +52,7 @@ export const translations = {
       ]
     },
     download: {
-      title: '下载 瑶光流梦',
+      title: '下载 瑶光流梦 Sunshine',
       latestVersion: '最新版本',
       checkUpdate: '检查更新',
       checking: '正在检查最新版本...',
@@ -109,6 +111,8 @@ export const translations = {
       wechatModalSubtitle: '支持我们持续开发与维护',
       wechatModalNote: '',
       closeModal: '关闭弹层',
+      commercial: '金牌赞助商',
+      emptyCommercial: '虚位以待，等待您的加入',
       gold: '金牌赞助者',
       silver: '银牌赞助者',
       bronze: '铜牌赞助者',
@@ -128,7 +132,7 @@ export const translations = {
     }
   },
   en: {
-    title: 'SDream',
+    title: 'AlkaidLab Sunshine',
     tagline: 'Make Game Streaming Greater',
     subtitle: 'Sunshine, a self-hosted game-stream host for Moonlight, now features an HDR-friendly fork that integrates virtual displays and control panels.',
     nav: {
@@ -140,9 +144,11 @@ export const translations = {
       sponsors: 'Sponsors'
     },
     hero: {
+      badge: 'Game Streaming Platform',
       download: 'Download Now',
       github: 'GitHub Releases',
-      mirror: 'Mirror Download'
+      mirror: 'Mirror Download',
+      stats: ['Low Latency', 'HDR Support', 'Virtual Display']
     },
     features: {
       title: 'Core Features',
@@ -174,7 +180,7 @@ export const translations = {
       ]
     },
     download: {
-      title: 'Download SDream',
+      title: 'Download AlkaidLab Sunshine',
       latestVersion: 'Latest Version',
       checkUpdate: 'Check Update',
       checking: 'Checking latest version...',
@@ -236,15 +242,17 @@ export const translations = {
       gold: 'Gold Sponsors',
       silver: 'Silver Sponsors',
       bronze: 'Bronze Sponsors',
+      commercial: 'Commercial Sponsors',
+      emptyCommercial: 'Your logo here — become the first!',
       emptyGold: 'Your logo here — become the first!',
       emptySilver: 'Your name will appear here',
       emptyBronze: 'Support open source, start small'
     },
     footer: {
-      title: 'SDream',
+      title: 'AlkaidLab Sunshine',
       subtitle: 'Make Game Streaming Greater',
       links: 'Links',
-      copyright: '© 2024 SDream. Modified from LizardByte/Sunshine.',
+      copyright: '© 2025 AlkaidLab Sunshine. Modified from LizardByte/Sunshine.',
       icp: 'Shu ICP 2025162900-3',
       icpLink: 'https://beian.miit.gov.cn/',
       policePlaceholder: 'Sichuan Public Security No. 51130202000571',
